@@ -1,5 +1,5 @@
 
-
+#define TAMANHOMATRICULA 8
 typedef struct Precos {
     float x;
     float y;
@@ -17,3 +17,10 @@ typedef struct Parque {
     Parque* next;
 
 } Parque;
+
+typedef struct Carro {
+    char matricula[TAMANHOMATRICULA];
+
+
+    Carro* next;    
+} Carro;
