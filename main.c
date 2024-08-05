@@ -1,6 +1,13 @@
 #include <stdio.h>
+#include structures.h
 
 int main() {
+    Parque AllParks;
+    Carro AllCars;
+
+    DataEHora ultimoRegisto;
+    ultimoResgisto = inicializaPrimeiroRegisto();
+    
     char input;
     while (input = getchar()) {
 
