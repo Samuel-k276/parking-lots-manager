@@ -1,5 +1,7 @@
 
 #define TAMANHOMATRICULA 8
+
+typedef float TipoPrecos;
 typedef struct Hora {
     int horas;
     int minutos;
@@ -17,29 +19,29 @@ typedef struct DataEHora {
 } DataEHora;
 
 typedef struct Precos {
-    float x;
-    float y;
-    float z;
+    TipoPrecos x;
+    TipoPrecos y;
+    TipoPrecos z;
 } Precos;
 
 
-typedef struct Parque* {
+typedef struct Parque {
     char* nome;
     int capacidade;
     int lugareslivres;
     
     Precos precos;
-    float faturacao;
+    TipoPrecos faturacao;
 
-    Parque next;
+    Parque* next;
 
 } Parque;
 
-typedef struct Carro* {
+typedef struct Carro {
     char matricula[TAMANHOMATRICULA];
-    float faturacao;    
+    TipoPrecos faturacao;    
     
 
     
-    Carro next;    
+    Carro* next;    
 } Carro;
