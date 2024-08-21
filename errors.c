@@ -14,12 +14,13 @@ int invalidCost (Precos preco) {
 }
 
 int parkingAlreadyExists (char* nome, Parque* beginOfList) {
-    
+
     while (beginOfList != NULL) {
         if (strcmp(nome, beginOfList->nome) == 0) {
             return 1;
         }
     }
+
 
     return 0;
 }
