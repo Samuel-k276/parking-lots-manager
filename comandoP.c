@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structures.h"
+#include "errors.c"
+#include "outras.c"
 
 Parque* createPark (char* name, int capacity, TipoPrecos x, TipoPrecos y, TipoPrecos z) {
     Parque* thisPark = (Parque*)malloc(sizeof(Parque));
@@ -32,4 +34,8 @@ void addPark (Parque* Park, Parque* beginOfList) {
     }
 
     current->next = Park;
+}
+ 
+void commandP () {
+
 }
