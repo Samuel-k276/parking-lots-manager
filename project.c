@@ -20,7 +20,7 @@ typedef struct Precos {
     TipoPreco z;
 } ConjuntoDePrecos;
 
-typedef struct Parque {
+typedef struct park {
     //informacao util
     char *nome;
     TipoCapacidade capacidade; 
@@ -29,7 +29,7 @@ typedef struct Parque {
     struct Precos preco;
 
     //ponteiro para o proximo
-    struct Parque *next;
+    struct park *next;
 
 } TipoParque;
 

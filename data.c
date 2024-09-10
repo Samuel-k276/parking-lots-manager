@@ -1,5 +1,22 @@
 #include <stdio.h>
-#include "structures.h"
+#include "data.h"
+
+
+struct hora {
+    int horas;
+    int minutos;
+};
+
+struct data {
+    int dia;
+    int mes;
+    int ano;
+};
+
+struct dataehora {
+    Data data;
+    Hora hora;
+};
 
 DataEHora inicializaPrimeiroRegisto () {
   DataEHora Registo;
