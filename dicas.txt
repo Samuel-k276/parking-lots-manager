@@ -1,0 +1,8 @@
+dicas
+
+
+para a funcao e fazer
+if (getchar() == ' ')    Registar veiculo
+if 9getchar() == '/n')   Listar parques
+
+funcao lernome()
