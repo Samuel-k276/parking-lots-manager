@@ -25,18 +25,18 @@ typedef struct park {
 
 };
 
-int invalidCapacity (int capacidade) {
+short invalidCapacity (int capacidade) {
     return (capacidade <= 0);
 }
 
-int invalidCost (Precos preco) {
-    return (preco.x <= 0 || preco.y <= 0 || preco.z <= 0 || preco.x >= preco.y || preco.y >= preco.z);
+short invalidCost (TipoPrecos x, TipoPrecos y, TipoPrecos z) {
+    return (x <= 0 || y <= 0 || z <= 0 || x >= y || y >= z);
 }
 
-int parkingAlreadyExists (char* nome, Park beginOfList) {
+short parkingAlreadyExists (const char* name, Park beginOfList) {
 
     while (beginOfList != NULL) {
-        if (strcmp(nome, beginOfList->nome) == 0) {
+        if (strcmp(name, beginOfList->nome) == 0) {
             return 1;
         }
     }
@@ -45,7 +45,7 @@ int parkingAlreadyExists (char* nome, Park beginOfList) {
     return 0;
 }
 
-int tooManyParks (Park beginOfList) {
+short tooManyParks (Park beginOfList) {
     Park current = beginOfList;
     int count = 0;
 
@@ -56,6 +56,14 @@ int tooManyParks (Park beginOfList) {
 
     return (count >= MAXPARKS);
 }
+
+char *lernome() {
+    char *name;
+
+
+    return name;
+}
+
 
 
 Park createPark (const char* name, int capacity, TipoPrecos x, TipoPrecos y, TipoPrecos z) {
@@ -90,6 +98,51 @@ void addPark (Park park, Park beginOfList) {
 }
  
  
-void commandP () {
+void commandP (Park beginOfList) {
+    if (getchar() == '\n') { 
+        listAllParks(beginOfList); 
+        return;
+    }
+    
+    int capacity;
+    TipoPrecos x, y, z;
+    const char *name = lernome();
+    scanf("%d %lf %lf %lf", &capacity, &x, &y, &z);
+
+    if (invalidCapacity (capacity)) {
+        printf("%d: invalid capacity.\n", capacity);
+        return;
+    }
+
+    if (invalidCost (x, y, z)) {
+        printf("invalid cost.\n");
+        return;
+    }
+
+    if (parkingAlreadyExists (name, beginOfList)) {
+        printf("%s: parking already exists.\n", name);
+        return;
+    }
+        
+    if (tooManyParks (beginOfList)) {
+        printf("too many parks.\n");
+        return;
+    }
+
+    Park newPark = createPark(name, capacity, x, y, z);
+    free(name);
+    addPark(newPark, beginOfList);
+}
+
+void freePark(Park thisPark) {
+    free(thisPark->nome);
+    //freehistorico
+    while(thisPark->capacidade) {
+
+    }
+    free(thisPark);
+}
+
+void deletePark(const char* name, Park beginOfList) {
 
 }

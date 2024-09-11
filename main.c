@@ -7,7 +7,7 @@
 
 int main() {
     Park AllParks;
-    Carro AllCars;
+    Car AllCars;
 
     DataEHora ultimoRegisto = inicializaPrimeiroRegisto();
     
@@ -18,7 +18,9 @@ int main() {
             case 'q':
                 break;
             case 'p':
-                comandoP();
+                comandoP(AllParks);
+            case 'e':
+                comandoE(AllParks, AllCars, &ultimoRegisto);
 
 
         }

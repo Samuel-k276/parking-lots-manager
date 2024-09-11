@@ -2,8 +2,9 @@
 #define __CARS_H__
 
 
-typedef struct carro *Carro;
+typedef struct carro *Car;
 
+void comandoE(Park AllParks, Car AllCars, DataEHora *ultimoRegisto);
 
 
 #endif
