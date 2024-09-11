@@ -3,6 +3,7 @@
 
 
 typedef struct carro *Car;
+typedef struct CarHistory *history;
 
 void comandoE(Park AllParks, Car AllCars, DataEHora *ultimoRegisto);
 
