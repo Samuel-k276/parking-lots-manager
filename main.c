@@ -21,7 +21,11 @@ int main() {
                 comandoP(AllParks);
             case 'e':
                 comandoE(AllParks, AllCars, &ultimoRegisto);
+            case 's':
+                commandS(AllParks, AllCars, &ultimoRegisto);
 
+            default:
+                
 
         }
         

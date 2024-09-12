@@ -40,13 +40,19 @@ Car createCar (char license[6]) {
     return thisCar;
 }
 
-void carEntry (char *parkName, Car thisCar, DataEHora *ultimoRegisto) {
-
+void carEntry (Park AllParks, char *parkName, Car thisCar, DataEHora *ultimoRegisto) {
+    Park thisPark = findPark(AllParks, parkName);
 
 }
 
 
 
 void comandoE(Park AllParks, Car AllCars, DataEHora *ultimoRegisto) {
-    
+
+    if (noSuchPark(AllParks, ...)) {
+
+        return;
+    }
+
+
 }

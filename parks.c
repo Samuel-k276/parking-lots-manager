@@ -13,7 +13,7 @@ struct precos {
     TipoPrecos z;
 };
 
-typedef struct park {
+struct park {
     char* nome;
     int capacidade;
     int lugareslivres;
@@ -58,8 +58,26 @@ short tooManyParks (Park beginOfList) {
 }
 
 char *lernome() {
-    char *name;
+    char *name = (char*)malloc(sizeof(char));
+    char c = getchar();
+    int i = 0;
 
+    if (c == '"') {
+        c = getchar();
+        while (c != '"'){
+            name[i++] = c;
+            name = (char*)realloc(name, (i + 1)*sizeof(char));
+            c = getchar();
+        }
+    
+    } else {
+        while (c != ' '){
+            name[i++] = c;
+            name = (char*)realloc(name, (i + 1)*sizeof(char));
+            c = getchar();
+        }
+    }
+    name[i] = '\0';
 
     return name;
 }
@@ -132,6 +150,22 @@ void commandP (Park beginOfList) {
     Park newPark = createPark(name, capacity, x, y, z);
     free(name);
     addPark(newPark, beginOfList);
+}
+
+short noSuchPark (Park beginOfList, const char* nameToFind) {
+    Park current = beginOfList;
+    while (strcmp(current->nome, nameToFind)) {
+        current = current->next;
+    }
+    return (current == NULL);
+}
+
+Park findPark (Park beginOfList, const char* nameToFind) {
+    Park current = beginOfList;
+    while (strcmp(current->nome, nameToFind)) {
+        current = current->next;
+    }
+    return current;
 }
 
 void freePark(Park thisPark) {
