@@ -1,3 +1,9 @@
 dicas
 
+FALTA HISTORICO DO PARQUE
 criar historico do parque = lista com aaaammddhhminmin da para fazer melhor hashing
+
+Carros
+O hashing pode ser paralelo á linked list, ou seja ser algo á parte que da trigger quando se cria um Carros
+- adicionar no createCar() triger para hashing function
+- ver projetos no leicmybox.org
