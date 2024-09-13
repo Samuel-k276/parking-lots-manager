@@ -30,7 +30,7 @@ DataEHora inicializaPrimeiroRegisto () {
 }
 
 short invalidDate(DataEHora date) {
-        const int maxDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        const short maxDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
         return (date.data.mes > 12 || date.data.mes < 1 || date.data.dia < 1 || date.data.dia > maxDays[date.data.mes - 1] || 
             date.hora.minutos > 59 || date.hora.minutos < 0 || date.hora.horas > 23 || date.hora.horas < 0);       
@@ -53,4 +53,27 @@ void changeDate (DataEHora *dateToChange, DataEHora newDate) {
     dateToChange->data.dia = newDate.data.dia;
     dateToChange->hora.horas = newDate.hora.horas;
     dateToChange->hora.minutos = newDate.hora.minutos;
+}
+
+int timeDiference (DataEHora recent, DataEHora old) {
+    //calcular diferenca de meses em dias
+    short dias;
+    if (old.data.mes > recent.data.mes) {dias = -1*difDias(old, recent);}
+    else {dias = difDias(recent, old);}
+
+    while (recent.data.mes != old.data.mes) {
+        recent.data.mes -= 1;
+    }
+    return ((recent.hora.minutos - old.hora.minutos) + (recent.hora.horas - old.hora.horas)*60 +
+            ((recent.data.ano - old.data.ano)*365 + dias)*24*60);
+}
+
+short difDias (DataEHora recent, DataEHora old) {
+    const short maxDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    short difDias;
+    while (recent.data.mes != old.data.mes) {
+        recent.data.mes -= 1;
+        difDias += maxDays[recent.data.mes];
+    }
+    return difDias;
 }
