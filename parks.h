@@ -20,6 +20,9 @@ Park createPark (const char *name, int capacity, TipoPrecos x, TipoPrecos y, Tip
 void addPark (Park park, Park beginOfList);
 void commandP (Park beginOfList);
 
+//setters
+void oneLessFreeSpot (Park beginOfList, const char* parkName);
+
 //getters
 Park findPark (Park beginOfList, const char* nameToFind);
 

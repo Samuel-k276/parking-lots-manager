@@ -10,8 +10,10 @@ short isParked (Car thisCar);
 short carExists (Car AllCars, char license[6]);
 
 //constructors
+History createHistory (char *parkName, DataEHora entryTime);
+void addHistory (History beginOfHistory, History historyToAdd);
 Car createCar (char license[6]);
-void carEntry (Park AllParks, char *parkName, Car thisCar, DataEHora time);
+void addEntry (char *parkName, Car thisCar, DataEHora time);
 void comandoE(Park AllParks, Car AllCars, DataEHora *ultimoRegisto);
 
 //getters

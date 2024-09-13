@@ -50,12 +50,20 @@ Car findCar (Car AllCars, char license[6]) {
     return current;
 }
 
-History findHistory (History firstRegist) {
-    History current = firstRegist;
-    while (current != NULL && current->exitTime.data.ano != NULL) {
+History createHistory (char *parkName, DataEHora entryTime) {
+    History thisHistory = (History)malloc(sizeof(struct CarHistory));
+    thisHistory->entryTime = entryTime;
+    strcpy(thisHistory->parkName, parkName);
+    
+    return thisHistory;
+}
+
+void addHistory (History beginOfHistory, History historyToAdd) {
+    History current = beginOfHistory;
+    while (current->next != NULL) {
         current = current->next;
     }
-    return current;
+    current->next = historyToAdd;
 }
 
 Car createCar (char license[6]) {
@@ -67,12 +75,14 @@ Car createCar (char license[6]) {
     return thisCar;
 }
 
-void carEntry (Park AllParks, char *parkName, Car thisCar, DataEHora time) {
-    Park thisPark = findPark(AllParks, parkName);
-    History newHistoric = findHistory()
-    thisCar->isParked = PARKED;
-    
-
+void addEntry (char *parkName, Car thisCar, DataEHora time) {
+    History newHistory = createHistory(parkName, time);
+    if (thisCar->history == NULL) {
+        thisCar->history = newHistory;
+    } else {
+        addHistory(thisCar->history, newHistory);
+    }
+    thisCar->isParked = PARKED;  
 }
 
 
@@ -104,6 +114,7 @@ void comandoE(Park AllParks, Car AllCars, DataEHora *ultimoRegisto) {
         return;
     }
     
-    carEntry(AllParks, parkName, thisCar, time);
+    carEntry(parkName, thisCar, time);
+    oneLessFreeSpot(AllParks, parkName);
     changeDate(ultimoRegisto, time);
 }

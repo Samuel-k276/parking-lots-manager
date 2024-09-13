@@ -168,6 +168,11 @@ Park findPark (Park beginOfList, const char* nameToFind) {
     return current;
 }
 
+void oneLessFreeSpot (Park beginOfList, const char* parkName) {
+    Park thisPark = findPark(beginOfList, parkName);
+    thisPark->lugareslivres -= 1;
+}
+
 void freePark(Park thisPark) {
     free(thisPark->nome);
     //freehistorico
