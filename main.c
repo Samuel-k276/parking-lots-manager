@@ -1,34 +1,22 @@
 #include <stdio.h>
 #include "parks.h"
 #include "cars.h"
-#include "data.h"
-#include "data.c"
+
+#include "time.h"
+#include "time.c"
+#include "hashmap.h"
+#include "hashmap.c"
+#include "linkedList.h"
+#include "linkedList.c"
 
 
 int main() {
-    Park AllParks;
-    Car AllCars;
+    ListNode AllParks = NULL;
+    HashMap AllCars = createHashMap();
+    Time time = time0();
 
-    DataEHora ultimoRegisto = inicializaPrimeiroRegisto();
-    
-    char input;
-    while (input = getchar()) {
+    while (1) {
 
-        switch(input) {
-            case 'q':
-                break;
-            case 'p':
-                comandoP(AllParks);
-            case 'e':
-                comandoE(AllParks, AllCars, &ultimoRegisto);
-            case 's':
-                commandS(AllParks, AllCars, &ultimoRegisto);
-
-            default:
-                
-
-        }
-        
 
 
     }

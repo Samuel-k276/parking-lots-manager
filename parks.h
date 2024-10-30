@@ -2,23 +2,19 @@
 #define __PARKS_H__
 
 typedef struct park *Park;
-typedef struct precos Precos;
-typedef float TipoPrecos;
+typedef struct prices Prices;
+typedef float PricesType;
 
 //verifications
 short invalidCapacity (int capacidade);
-short invalidCost (TipoPrecos x, TipoPrecos y, TipoPrecos z);
+short invalidCost (PricesType x, PricesType y, PricesType z);
 short parkingAlreadyExists (const char *name, Park beginOfList);
 short tooManyParks (Park beginOfList);
 short noSuchPark (Park beginOfList, const char* nameToFind);
 
-//secondary
-char* lernome();
-
 //constructors
-Park createPark (const char *name, int capacity, TipoPrecos x, TipoPrecos y, TipoPrecos z);
+Park createPark (const char *name, int capacity, PricesType x, PricesType y, PricesType z);
 void addPark (Park park, Park beginOfList);
-void commandP (Park beginOfList);
 
 //setters
 void oneLessFreeSpot (Park beginOfList, const char* parkName);
