@@ -50,10 +50,12 @@ short equalPark (Park park1, Park park2) {
     return (strcmp(park1->name, park2->name) == 0);
 }
 
-
-
 void oneLessFreeSpot (Park park) {
     park->freeSpots -= 1;
+}
+
+short isParkFull(Park park) {
+    return park->freeSpots == 0;
 }
 
 void freePark(Park thisPark) {

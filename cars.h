@@ -2,16 +2,19 @@
 #define __CARS_H__
 
 typedef struct carro *Car;
-typedef struct CarHistory *History;
+typedef struct carHistory *History;
 
-//verifications
+#define LICENSESIZE 7
+#define NOTPARKED 0
+#define PARKED 1
+
 short isParked (Car thisCar);
 
 //constructors
-History createHistory (char *parkName, DataEHora entryTime);
+History createHistory (char *parkName, Time entryTime);
 void addHistory (History beginOfHistory, History historyToAdd);
-Car createCar (char license[6]);
-void addEntry (char *parkName, Car thisCar, DataEHora time);
+Car createCar (char license[LICENSESIZE]);
+void addEntry (char *parkName, Car thisCar, Time time);
 
 
 

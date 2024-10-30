@@ -3,14 +3,13 @@
 
 #include "parks.h"
 #include "cars.h"
-#include "data.h"
+#include "time.h"
 #include "hashmap.h"
+#include "linkedList.h"
 
-char* readName();
-char* readCommand();
-
-void commandP (Park beginOfList);
-void comandoE(Park AllParks, HashMap carMap, DataEHora *ultimoRegisto);
+void commandP0 (ListNode headNode);
+void commandP1 (ListNode headNode, char* name, int capacity, PricesType x, PricesType y, PricesType z);
+void comandoE (ListNode headNode, HashMap carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime);
 
 
 #endif

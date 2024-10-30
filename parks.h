@@ -5,25 +5,15 @@ typedef struct park *Park;
 typedef struct prices Prices;
 typedef float PricesType;
 
-//verifications
 short invalidCapacity (int capacidade);
 short invalidCost (PricesType x, PricesType y, PricesType z);
-short parkingAlreadyExists (const char *name, Park beginOfList);
-short tooManyParks (Park beginOfList);
-short noSuchPark (Park beginOfList, const char* nameToFind);
+short equalPark (Park park1, Park park2);
 
-//constructors
 Park createPark (const char *name, int capacity, PricesType x, PricesType y, PricesType z);
-void addPark (Park park, Park beginOfList);
+Prices createPrices(PricesType x, PricesType y, PricesType z);
 
-//setters
-void oneLessFreeSpot (Park beginOfList, const char* parkName);
+void oneLessFreeSpot (Park park);
 
-//getters
-Park findPark (Park beginOfList, const char* nameToFind);
-
-//destructor
 void freePark (Park thisPark);
-void deletePark(const char* name, Park beginOfList);
 
 #endif

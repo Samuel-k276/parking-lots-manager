@@ -9,13 +9,14 @@
 #define MAXPARKS 20
 
 struct listNode {
-    ListNode before;
+    ListNode prev;
     Park park;
     ListNode next;
 };
 
 ListNode createListNode(Park park) {
     ListNode thisNode = (ListNode)malloc(sizeof(struct listNode));
+    thisNode->prev = NULL;
     thisNode->park = park;
     thisNode->next = NULL;
 
@@ -30,27 +31,65 @@ void appendListNode(ListNode node, ListNode beginOfList) {
     current->next = node;
 }
 
-ListNode findListNode(char *name, ListNode beginOfList) {
-    ListNode current = beginOfList;
+ListNode findListNode(char *name, ListNode headNode) {
+    ListNode current = headNode;
     while (current != NULL && strcmp(current->park->name, name)) {
         current = current->next;
     }
     return current;
 }
 
-short nodeExists(char *name, ListNode beginOfList) {
-    return findListNode(name, beginOfList) != NULL;
+short nodeExists(char *name, ListNode headNode) {
+    return findListNode(name, headNode) != NULL;
 }
 
-void removeListNode(char *name, ListNode beginOfList) {
-    ListNode node = findListNode(name, beginOfList);
-    if (node->before == NULL) {
-        beginOfList = node->next;
+short tooManyParks(ListNode headNode) {
+    ListNode current = headNode;
+    int i = 0;
+    while (current != NULL) {
+        current = current->next;
+        i++;
+    }
+    if (i < MAXPARKS) i = 0;
+    return i;
+}
+
+void removeListNode(char *name, ListNode headNode) {
+    ListNode node = findListNode(name, headNode);
+    if (node->prev == NULL) {
+        headNode = node->next;
         return;
     }
 
-    node->before->next = node->next;
+    node->prev->next = node->next;
     freePark(node->park);
     free(node);
 }
 
+void printAllNodes(ListNode headNode) {
+    ListNode current = headNode;
+    while (current != NULL) {
+        printf("%s %d %d\n", current->park->name, current->park->capacity, current->park->freeSpots);
+        current = current->next;
+    }
+}
+
+void freeList(ListNode headNode) {
+    if (headNode == NULL)
+        return;
+
+    if (headNode->next == NULL) {
+        freePark(headNode->park);
+        free(headNode);
+        return;
+    }
+
+    while (headNode->next != NULL) {
+        headNode = headNode->next;
+        freePark(headNode->prev->park);
+        free(headNode->prev);
+    }
+
+    freePark(headNode->park);
+    free(headNode);
+}

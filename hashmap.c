@@ -26,7 +26,7 @@ unsigned int hash(char key[LICENSESIZE]) {
     return hashval % HASHSIZE;
 }
 
-HashMap createHashMap() {
+HashMap createCarHashMap() {
     HashMap hashMap = (HashMap *) malloc(sizeof(HashMap));
     for (int i = 0; i < HASHSIZE; i++) {
         hashMap->table[i] = NULL;
@@ -34,7 +34,7 @@ HashMap createHashMap() {
     return hashMap;
 }
 
-void put(HashMap hashMap, char key[LICENSESIZE], Car value) {
+void putCar(HashMap hashMap, char key[LICENSESIZE], Car value) {
     unsigned int hashval = hash(key);
     Pair pair = hashMap->table[hashval];
 
@@ -49,7 +49,7 @@ void put(HashMap hashMap, char key[LICENSESIZE], Car value) {
     hashMap->table[hashval] = pair;
 }
 
-Car get(HashMap hashMap, char key[LICENSESIZE]) {
+Car getCar(HashMap hashMap, char key[LICENSESIZE]) {
     unsigned int hashval = hash(key);
     Pair pair = hashMap->table[hashval];
 
@@ -64,7 +64,7 @@ Car get(HashMap hashMap, char key[LICENSESIZE]) {
 }
 
 
-void freeHashMap(HashMap map) {
+void freeCarHashMap(HashMap map) {
     for (int i = 0; i < HASHSIZE; i++) {
         Pair pair = map->table[i];
         while (pair != NULL) {

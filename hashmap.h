@@ -7,9 +7,9 @@ typedef struct Pair *Pair;
 typedef struct HashMap *HashMap;
 
 unsigned int hash(char key[LICENSESIZE]);
-HashMap createHashMap();
-void put(HashMap hashMap, char key[LICENSESIZE], Car value);
-Car get(HashMap hashMap, char key[LICENSESIZE]);
-void freeHashMap(HashMap hashMap);
+HashMap createCarHashMap();
+void putCar(HashMap hashMap, char key[LICENSESIZE], Car value);
+Car getCar(HashMap hashMap, char key[LICENSESIZE]);
+void freeCarHashMap(HashMap hashMap);
 
 #endif

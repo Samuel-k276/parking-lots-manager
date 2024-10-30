@@ -7,10 +7,6 @@
 #include "time.h"
 #include "time.c"
 
-#define LICENSESIZE 7
-#define NOTPARKED 0
-#define PARKED 1
-
 struct carro {
     char license[LICENSESIZE];
     short isParked;
@@ -19,7 +15,7 @@ struct carro {
 };
 
 
-struct CarHistory {
+struct carHistory {
     Time entryTime;
     Time exitTime;
     const char* parkName;
@@ -36,11 +32,13 @@ Car createCar (char license[LICENSESIZE]) {
 }
 
 short isParked (Car thisCar) {
+    if (thisCar == NULL)    
+        return NOTPARKED;
     return thisCar->isParked;
 }
 
 History createHistory (char *parkName, Time entryTime) {
-    History thisHistory = (History)malloc(sizeof(struct CarHistory));
+    History thisHistory = (History)malloc(sizeof(struct carHistory));
     thisHistory->entryTime = entryTime;
     strcpy(thisHistory->parkName, parkName);
     
