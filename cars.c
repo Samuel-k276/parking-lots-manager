@@ -3,22 +3,19 @@
 #include <string.h>
 
 #include "cars.h"
-#include "parks.h"
-#include "time.h"
-#include "time.c"
 
 struct carro {
     char license[LICENSESIZE];
     short isParked;
     History history;
-    PricesType faturacao;  
+    float faturacao;  
 };
 
 
 struct carHistory {
     Time entryTime;
     Time exitTime;
-    const char* parkName;
+    char* parkName;
     History next;
 };
 
@@ -70,4 +67,12 @@ void addExit(char *parkName, Car thisCar, Time time) {
     
 
     thisCar->isParked = NOTPARKED;
+}
+
+short invalidLicensePlate(char license[LICENSESIZE]) {
+    return 1;
+}
+
+void freeHistory(Car car) {
+    
 }

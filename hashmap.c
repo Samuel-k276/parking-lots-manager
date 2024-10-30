@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "cars.h"
-#include "cars.c"
 #include "hashmap.h"
 
 #define HASHSIZE 101
@@ -27,7 +25,7 @@ unsigned int hash(char key[LICENSESIZE]) {
 }
 
 HashMap createCarHashMap() {
-    HashMap hashMap = (HashMap *) malloc(sizeof(HashMap));
+    HashMap hashMap = (HashMap) malloc(sizeof(HashMap));
     for (int i = 0; i < HASHSIZE; i++) {
         hashMap->table[i] = NULL;
     }
@@ -42,7 +40,7 @@ void putCar(HashMap hashMap, char key[LICENSESIZE], Car value) {
         pair = pair->next;
     }
 
-    pair = (Pair *) malloc(sizeof(Pair));
+    pair = (Pair) malloc(sizeof(Pair));
     strcpy(pair->key, key);
     pair->value = value;
     pair->next = hashMap->table[hashval];

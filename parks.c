@@ -54,7 +54,7 @@ void oneLessFreeSpot (Park park) {
     park->freeSpots -= 1;
 }
 
-short isParkFull(Park park) {
+short isParkFull (Park park) {
     return park->freeSpots == 0;
 }
 

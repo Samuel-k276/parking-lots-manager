@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parks.h"
-#include "parks.c"
 #include "linkedList.h"
 
 #define MAXPARKS 20

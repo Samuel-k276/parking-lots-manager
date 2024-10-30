@@ -13,6 +13,7 @@ Park createPark (const char *name, int capacity, PricesType x, PricesType y, Pri
 Prices createPrices(PricesType x, PricesType y, PricesType z);
 
 void oneLessFreeSpot (Park park);
+short isParkFull (Park park);
 
 void freePark (Park thisPark);
 

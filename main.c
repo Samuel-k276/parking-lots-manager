@@ -1,65 +1,76 @@
 #include <stdio.h>
-#include "parks.h"
-#include "cars.h"
+#include <stdlib.h>
 
-#include "time.h"
-#include "time.c"
-#include "hashmap.h"
-#include "hashmap.c"
-#include "linkedList.h"
-#include "linkedList.c"
-#include "commands.h"
-#include "commands.c"
+
+#include "main.h"
 
 int main() {
     ListNode headNode = NULL;
-    HashMap carMap = createHashMap();
+    HashMap carMap = createCarHashMap();
     Time time = time0();
 
-    readInput(headNode, carMap, &time);
+    char c = getchar();
+    char *name;
+    while (c != 'q') {
+        switch(c) {
+            case 'p':
+                if (getchar() == '\0')
+                    commandP0(headNode);
+                else {
+                    inputToCommandP1(headNode);
+                }
+                break;
+            case 'e':
+
+            case 's':
+
+            case 'v':
+
+            case 'f':
+
+            case 'r':
+
+            default:
+                break;
+        }
+
+        c = getchar();
+    }
 
     freeAll(headNode, carMap);
     return 0;
 }
 
 void freeAll(ListNode headNode, HashMap carMap) {
-    freeHashMap(carMap);
+    freeCarHashMap(carMap);
     freeList(headNode);
 }
 
-void readInput(ListNode headNode, HashMap carMap, Time *time) {
-    char *command = (char*) malloc(2*sizeof(char));
-    char c;
-    int i = 0;
-    while ((c = getchar()) != 'q') {
-        while (c != '\n') {
-            command[i++] = c;
-            c = getchar();
-        }
-        command[++i] = '\0';
-        inputToCommand(headNode, carMap, &time, command);
-    }
+void inputToCommandP1(ListNode headNode) {
+    char *name = readName();
+    int capacity;
+    PricesType x, y, z;
+    scanf("%d %f %f %f", &capacity, &x, &y, &z);
+    commandP1(headNode, name, capacity, x, y, z);
+    free(name);
 }
 
-void inputToCommand(ListNode headNode, HashMap carMap, Time *time, char *command) {
-    switch(command[0]) {
-        case 'p':
-            if (command[1] == '\0')
-                commandP0(headNode);
-            else {
-                
-            }
-        case 'e':
-
-        case 's':
-
-        case 'v':
-
-        case 'f':
-
-        case 'r':
-
-        default:
-            break;
+char* readName() {
+    char c = getchar();
+    char end = ' ';
+    char *name = (char *)malloc(sizeof(char));;
+    int i;
+    if (c == '"') {
+        end = c;
+        c = getchar();
     }
+
+    for (i = 0; c != end; i++) {
+        name[i] = c;
+        c = getchar();
+        name = (char *)realloc(name, (i+2)* sizeof(char));
+    }
+
+    name[i] = '\0';
+    return name;
 }

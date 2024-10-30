@@ -2,6 +2,7 @@
 #define __HASHMAP_H__
 
 #include "cars.h"
+#include "cars.c"
 
 typedef struct Pair *Pair;
 typedef struct HashMap *HashMap;

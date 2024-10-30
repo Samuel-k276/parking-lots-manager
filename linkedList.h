@@ -1,7 +1,8 @@
 #ifndef __LINKEDLIST_H__
 #define __LINKEDLIST_H__
 
-#include "parks.h"
+
+#include "parks.c"
 
 typedef struct listNode *ListNode;
 

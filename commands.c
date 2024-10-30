@@ -2,16 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parks.h"
-#include "parks.c"
-#include "cars.h"
-#include "cars.c"
-#include "time.h"
-#include "time.c"
-#include "hashmap.h"
-#include "hashmap.c"
-#include "linkedList.h"
-#include "linkedList.c"
+#include "commands.h"
 
 void commandP0 (ListNode headNode) {
     printAllNodes(headNode);
@@ -40,12 +31,12 @@ void commandP1 (ListNode headNode, char* name, int capacity, PricesType x, Price
 
     Park newPark = createPark(name, capacity, x, y, z);
     free(name);
-    appendListNode(newPark, headNode);
+    appendListNode(createListNode(newPark), headNode);
 }
 
 void comandoE(ListNode headNode, HashMap carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime) {
     Car car;
-    Park park = findListNode(parkName, headNode);
+    Park park = findListNode(parkName, headNode)->park;
 
     if (park == NULL) {
         printf("%s: no such parking.\n", parkName);
@@ -72,7 +63,7 @@ void comandoE(ListNode headNode, HashMap carMap, Time *time, char *parkName, cha
         putCar(carMap, license, car);
     }
     
-    carEntry(parkName, car, time);
+    addEntry(parkName, car, newTime);
     oneLessFreeSpot(park);
-    changeDate(time, newTime);
+    changeTime(time, newTime);
 }
