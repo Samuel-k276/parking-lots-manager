@@ -15,7 +15,7 @@ struct Pair {
 };
 
 struct HashMap {
-    Pair *table[HASHSIZE];
+    Pair table[HASHSIZE];
 };
 
 unsigned int hash(char key[LICENSESIZE]) {
@@ -63,26 +63,6 @@ Car get(HashMap hashMap, char key[LICENSESIZE]) {
     return NULL;
 }
 
-void removeKey(HashMap map, char key[LICENSESIZE]) {
-    unsigned int hashval = hash(key);
-    Pair pair = map->table[hashval];
-    Pair prev = NULL;
-
-    while (pair != NULL && strcmp(pair->key, key) != 0) {
-        prev = pair;
-        pair = pair->next;
-    }
-
-    if (pair == NULL) return;
-
-    if (prev == NULL)
-        map->table[hashval] = pair->next;
-    else
-        prev->next = pair->next;
-
-    free(pair->key);
-    free(pair);
-}
 
 void freeHashMap(HashMap map) {
     for (int i = 0; i < HASHSIZE; i++) {
@@ -94,6 +74,10 @@ void freeHashMap(HashMap map) {
             pair = next;
         }
     }
+    for (int i = 0; i < HASHSIZE; i++) {
+        freeHistory(map->table[i]->value);
+    }
+    
     free(map->table);
     free(map);
 }
