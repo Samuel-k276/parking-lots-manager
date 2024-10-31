@@ -114,5 +114,6 @@ void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
                                                     newTime.date.day, newTime.date.month, newTime.date.year, newTime.hours.hours, newTime.hours.minutes,
                                                     calculateBilling(park->prices, lastHistoryOfCar->entryTime, newTime));   
     free(licenseString);
-    
 }
+
+

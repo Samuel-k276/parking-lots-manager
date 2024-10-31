@@ -50,31 +50,46 @@ Time newTime(int day, int month, int year, int hours, int minutes) {
     return time;
 }
 
-int timeDifference (Time first, Time after) {
-    Time recent = first;
-    Time old = after; 
-    short days;
-    if (old.date.month > recent.date.month) {
-        days = -1*daysDifference(old, recent);
-    } else {
-        days = daysDifference(recent, old);
+int timeDifference (Time after, Time first) {
+    int totalMinutes = 0;
+    
+    while (first.date.day != after.date.day || 
+           first.date.month != after.date.month || 
+           first.date.year != after.date.year) {
+        
+        totalMinutes += 24 * 60;
+
+        first.date.day++;
+
+        if (first.date.day > daysInTheMonth[first.date.month - 1]) {
+            first.date.day = 1; 
+            first.date.month++;  
+
+            if (first.date.month > 12) {
+                first.date.month = 1; 
+                first.date.year++;     
+            }
+        }
     }
 
-    while (recent.date.month != old.date.month) {
-        recent.date.month -= 1;
-    }
+    totalMinutes += (after.hours.hours - first.hours.hours) * 60;
+    totalMinutes += (after.hours.minutes - first.hours.minutes);
 
-    return ((recent.hours.minutes - old.hours.minutes) + (recent.hours.hours - old.hours.hours)*60 +
-            ((recent.date.year - old.date.year)*365 + days)*24*60);
+    return totalMinutes;
 }
 
 short daysDifference (Time first, Time after) {
     Time recent = first;
     Time old = after;
     short daysDifference;
-    while (recent.date.month != old.date.month) {
-        recent.date.month -= 1;
-        daysDifference += daysInTheMonth[recent.date.month];
+    while (recent.date.month != old.date.month || recent.date.year != old.date.year) {
+        daysDifference += daysInTheMonth[recent.date.month - 1];
+        recent.date.month--;
+        if (recent.date.month == 0) {
+            recent.date.month = 12;
+            recent.date.year--;
+        }
     }
+
     return daysDifference;
 }

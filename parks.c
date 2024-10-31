@@ -54,25 +54,37 @@ void freePark(Park thisPark) {
 }
 
 PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
-    PricesType billing = 0;
+    PricesType billing, lastDayBilling = 0;
     int difference = timeDifference(exitTime, entryTime);
+    short lessThanDay = 0;
+    
 
     while (difference > (60*24)) {
         billing += prices.z;
-        difference -= 60*24;
+        difference -= (60*24);
     }
+
+    if (difference < 24*60) {
+        lessThanDay = 1;
+    }   
 
     int count = 0;
     while (difference > 0 && count < 4) {
-        billing += prices.x;
+        lastDayBilling += prices.x;
         difference -= 15;
         count++;
     }
 
     while (difference > 0) {
-        billing += prices.y;
+        lastDayBilling += prices.y;
         difference -= 15;
     }
+
+    if (lessThanDay && lastDayBilling > prices.z) {
+        lastDayBilling = prices.z;
+    }
+
+    billing += lastDayBilling;
 
     return billing;
 }
