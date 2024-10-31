@@ -4,14 +4,6 @@
 
 #include "linkedList.h"
 
-#define MAXPARKS 20
-
-struct listNode {
-    ListNode prev;
-    Park park;
-    ListNode next;
-};
-
 ListNode createListNode(Park park) {
     ListNode thisNode = (ListNode)malloc(sizeof(struct listNode));
     thisNode->prev = NULL;

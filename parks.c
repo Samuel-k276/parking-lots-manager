@@ -4,20 +4,6 @@
 
 #include "parks.h"
 
-struct prices {
-    PricesType x;
-    PricesType y;
-    PricesType z;
-};
-
-struct park {
-    char* name;
-    int capacity;
-    int freeSpots;
-    Prices prices;
-    PricesType billing;
-};
-
 Park createPark (char* name, int capacity, PricesType x, PricesType y, PricesType z) {
     Park thisPark = (Park)malloc(sizeof(struct park));
     thisPark->name = (char *)name;
@@ -54,6 +40,10 @@ void oneLessFreeSpot (Park park) {
     park->freeSpots -= 1;
 }
 
+void oneMoreFreeSpot (Park park) {
+    park->freeSpots += 1;
+}
+
 short isParkFull (Park park) {
     return park->freeSpots == 0;
 }
@@ -63,3 +53,25 @@ void freePark(Park thisPark) {
     free(thisPark);
 }
 
+PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
+    PricesType billing = 0;
+    int difference = timeDifference(exitTime, entryTime);
+    while (difference > (60*24)) {
+        billing += prices.z;
+        difference -= 60*24;
+    }
+
+    int count = 0;
+    while (difference > 0 && count < 3) {
+        billing += prices.x;
+        difference -= 15;
+        count++;
+    }
+
+    while (difference > 0) {
+        billing += prices.y;
+        difference -= 15;
+    }
+
+    return billing;
+}

@@ -75,3 +75,43 @@ void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
 
     printf("%s %d\n", park->name, park->freeSpots);
 }
+
+void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime) {
+    Car car;
+    History lastHistoryOfCar;
+    ListNode node = findListNode(parkName, headNode);
+
+    if (node == NULL) {
+        printf("%s: no such parking.\n", parkName);
+        return;
+    }
+
+    Park park = node->park;
+
+    if (invalidLicensePlate(license)) {
+        printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
+        return;
+    }
+
+    if (!isParked(car = getCar(*carMap, license)) || strcmp((lastHistoryOfCar = lastHistory(car))->parkName, parkName)) {
+        printf("%c%c-%c%c-%c%c: invalid vehicle exit.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
+        return;
+    }
+
+    if (invalidTime(newTime) || mostRecent(*time, newTime)) {
+        printf("invalid date.\n");
+        return;
+    }
+
+    addExit(lastHistoryOfCar, car, newTime);
+    oneMoreFreeSpot(park);
+    changeTime(time, newTime);
+    char *licenseString = licenseToString(car->license);
+    printf("%s %d-%d-%d %d:%d %d-%d-%d %d:%d %.2f\n", licenseString, lastHistoryOfCar->entryTime.date.day, 
+                                                    lastHistoryOfCar->entryTime.date.month, lastHistoryOfCar->entryTime.date.year, 
+                                                    lastHistoryOfCar->entryTime.hours.hours, lastHistoryOfCar->entryTime.hours.minutes, 
+                                                    newTime.date.day, newTime.date.month, newTime.date.year, newTime.hours.hours, newTime.hours.minutes,
+                                                    calculateBilling(park->prices, lastHistoryOfCar->entryTime, newTime));   
+    free(licenseString);
+    
+}

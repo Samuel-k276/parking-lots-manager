@@ -2,22 +2,6 @@
 
 #include "time.h"
 
-struct hours {
-    int hours;
-    int minutes;
-};
-
-struct date {
-    int day;
-    int month;
-    int year;
-};
-
-struct time {
-    Date date;
-    Hours hours;
-};
-
 const short daysInTheMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 Time time0() {
@@ -66,7 +50,7 @@ Time newTime(int day, int month, int year, int hours, int minutes) {
     return time;
 }
 
-int timeDiference (Time recent, Time old) {
+int timeDifference (Time recent, Time old) {
     short days;
     if (old.date.month > recent.date.month) {
         days = -1*daysDifference(old, recent);

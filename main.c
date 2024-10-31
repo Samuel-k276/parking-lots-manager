@@ -20,9 +20,10 @@ int main() {
                 }
                 break;
             case 'e':
-                inputToCommandE(&headNode, &carMap, &time);
+                inputToCommandEntryOrExit(&headNode, &carMap, &time, ENTRY);
                 break;
             case 's':
+                inputToCommandEntryOrExit(&headNode, &carMap, &time, EXIT);
                 break;
             case 'v':
                 break;
@@ -54,7 +55,7 @@ void inputToCommandP1(ListNode *headNode) {
     commandP1(headNode, name, capacity, x, y, z);
 }
 
-void inputToCommandE(ListNode *headNode, HashMap *carMap, Time *time) {
+void inputToCommandEntryOrExit(ListNode *headNode, HashMap *carMap, Time *time, short type) {
     getchar();
     char *name = readName();
     char license[LICENSESIZE];
@@ -63,7 +64,8 @@ void inputToCommandE(ListNode *headNode, HashMap *carMap, Time *time) {
                                     &license[4], &license[5], &day, &month, &year, &hours, &minutes);
     license[6] = '\0';
     Time new = newTime(day, month, year, hours, minutes);
-    commandE(headNode, carMap, time, name, license, new);
+    if (type = ENTRY) commandE(headNode, carMap, time, name, license, new);
+    if (type = EXIT) commandS(headNode, carMap, time, name, license, new);
 }
 
 char* readName() {

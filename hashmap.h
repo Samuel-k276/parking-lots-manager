@@ -2,10 +2,18 @@
 #define __HASHMAP_H__
 
 #include "cars.h"
-#include "cars.c"
 
-typedef struct Pair *Pair;
-typedef struct HashMap *HashMap;
+#define HASHSIZE 101
+
+typedef struct Pair {
+    char key[LICENSESIZE];
+    Car value;
+    struct Pair *next;
+} *Pair;
+
+typedef struct HashMap {
+    Pair table[HASHSIZE];
+} *HashMap;
 
 unsigned int hash(char key[LICENSESIZE]);
 HashMap createCarHashMap();

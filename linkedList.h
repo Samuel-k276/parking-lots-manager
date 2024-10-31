@@ -2,11 +2,15 @@
 #define __LINKEDLIST_H__
 
 #include "parks.h"
-#include "parks.c"
-
-typedef struct listNode *ListNode;
 
 #define MAXPARKS 20
+
+typedef struct listNode {
+    struct listNode *prev;
+    Park park;
+    struct listNode *next;
+} *ListNode;
+
 
 ListNode createListNode(Park park);
 void appendListNode(ListNode node, ListNode *beginOfList);

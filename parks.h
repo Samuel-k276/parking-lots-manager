@@ -1,9 +1,23 @@
 #ifndef __PARKS_H__
 #define __PARKS_H__
 
-typedef struct park *Park;
-typedef struct prices Prices;
+#include "time.h"
+
 typedef float PricesType;
+typedef struct prices {
+    PricesType x;
+    PricesType y;
+    PricesType z;
+} Prices;
+
+typedef struct park {
+    char* name;
+    int capacity;
+    int freeSpots;
+    Prices prices;
+    PricesType billing;
+} *Park;
+
 
 short invalidCapacity (int capacidade);
 short invalidCost (PricesType x, PricesType y, PricesType z);
@@ -13,7 +27,9 @@ Park createPark (char *name, int capacity, PricesType x, PricesType y, PricesTyp
 Prices createPrices(PricesType x, PricesType y, PricesType z);
 
 void oneLessFreeSpot (Park park);
+void oneMoreFreeSpot (Park park);
 short isParkFull (Park park);
+PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime);
 
 void freePark (Park thisPark);
 

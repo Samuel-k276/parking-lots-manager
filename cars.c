@@ -5,21 +5,6 @@
 
 #include "cars.h"
 
-struct carro {
-    char license[LICENSESIZE];
-    short isParked;
-    History history;
-    float faturacao;  
-};
-
-
-struct carHistory {
-    Time entryTime;
-    Time exitTime;
-    char* parkName;
-    History next;
-};
-
 Car createCar (char license[LICENSESIZE]) {
     Car thisCar = (Car)malloc(sizeof(struct carro));
     strcpy(thisCar->license, license);
@@ -64,10 +49,9 @@ void addEntry (char *parkName, Car thisCar, Time time) {
 }
 
 
-void addExit(char *parkName, Car thisCar, Time time) {
-    
-
-    thisCar->isParked = NOTPARKED;
+void addExit(History lastHistory, Car car, Time time) {
+    lastHistory->exitTime = time;
+    car->isParked = NOTPARKED;
 }
 
 short invalidLicensePlate(char license[LICENSESIZE]) {
@@ -83,8 +67,38 @@ short invalidLicensePlate(char license[LICENSESIZE]) {
 short invalidPair (char a, char b) {
     return !('0' <= a <= '9' && '0' <= b <= '9' ||
              'A' <= a <= 'Z' && 'A' <= b <= 'Z' );
-
 }
+
+char* licenseToString(char license[LICENSESIZE]) {
+    char* string = (char*)malloc((LICENSESIZE + 2) * sizeof(char));
+    string[0] = license[0];
+    string[1] = license[1];
+    string[2] = '-';
+    string[3] = license[2];
+    string[4] = license[3];
+    string[5] = '-';
+    string[6] = license[4];
+    string[7] = license[5];
+    string[8] = '\0';
+    return string;
+}
+
+
+History lastHistory(Car car) {
+    if (car == NULL) return NULL;
+    if (car->isParked == NOTPARKED) return NULL;
+    History current = car->history;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    return current;
+}
+
+void freeCar(Car car) {
+    freeHistory(car);
+    free(car);
+}
+
 void freeHistory(Car car) {
     History current = car->history;
     History next;

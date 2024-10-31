@@ -4,18 +4,6 @@
 
 #include "hashmap.h"
 
-#define HASHSIZE 101
-
-struct Pair {
-    char key[LICENSESIZE];
-    Car value;
-    struct Pair *next;
-};
-
-struct HashMap {
-    Pair table[HASHSIZE];
-};
-
 unsigned int hash(char key[LICENSESIZE]) {
     unsigned long int hashval = 0;
     for (int i = 0; key[i] != '\0'; i++) {

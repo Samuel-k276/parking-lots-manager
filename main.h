@@ -2,12 +2,14 @@
 #define __MAIN_H__
 
 #include "commands.h"
-#include "commands.c"
+
+#define ENTRY 1
+#define EXIT 0
 
 char* readName();
 void freeAll(ListNode headNode, HashMap carMap);
 
 void inputToCommandP1(ListNode *headNode);
-void inputToCommandE(ListNode *headNode, HashMap *carMap, Time *time);
+void inputToCommandEntryOrExit(ListNode *headNode, HashMap *carMap, Time *time, short type);
 
 #endif

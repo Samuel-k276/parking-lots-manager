@@ -1,15 +1,26 @@
 #ifndef __CARS_H__
 #define __CARS_H__
 
-typedef struct carro *Car;
-typedef struct carHistory *History;
+#include "time.h"
 
 #define LICENSESIZE 7
 #define NOTPARKED 0
 #define PARKED 1
 
-#include "time.h"
-#include "time.c"
+typedef struct carHistory {
+    Time entryTime;
+    Time exitTime;
+    char* parkName;
+    struct carHistory *next;
+
+} *History;
+typedef struct carro {
+    char license[LICENSESIZE];
+    short isParked;
+    History history;
+    float faturacao;  
+} *Car;
+
 
 short isParked (Car thisCar);
 
@@ -20,6 +31,9 @@ void addHistory (History beginOfHistory, History historyToAdd);
 void addEntry (char *parkName, Car thisCar, Time time);
 short invalidLicensePlate(char license[LICENSESIZE]);
 short invalidPair (char a, char b);
+char* licenseToString(char license[LICENSESIZE]);
+History lastHistory(Car car);
+void addExit(History lastHistory, Car car, Time time);
 void freeHistory(Car car);
 
 
