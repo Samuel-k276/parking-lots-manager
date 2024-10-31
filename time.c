@@ -20,7 +20,7 @@ short invalidTime(Time date) {
             date.hours.minutes > 59 || date.hours.minutes < 0 || date.hours.hours > 23 || date.hours.hours < 0);       
 }
 
-//return 1 if date 1 is the most recent
+//return 1 if time 1 is the most recent
 short mostRecent (Time time1, Time time2) {
     if (time1.date.year > time2.date.year) return 1;
     if (time1.date.year < time2.date.year) return 0;

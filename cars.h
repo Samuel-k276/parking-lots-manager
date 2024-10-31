@@ -27,13 +27,13 @@ short isParked (Car thisCar);
 //constructors
 Car createCar (char license[LICENSESIZE]);
 History createHistory (char *parkName, Time entryTime);
-void addEntry (char *parkName, Car *thisCar, Time time);
+void addEntry (char *parkName, Car thisCar, Time time);
 short invalidLicensePlate(char license[LICENSESIZE]);
 short invalidPair (char a, char b);
 char* licenseToString(char license[LICENSESIZE]);
-History lastHistory(Car car);
+
 void printHistory(Car car);
-void addExit(History *lastHistory, Car car, Time time);
+Time addExit(char *parkName, Car car, Time time);
 void freeHistory(Car car);
 
 

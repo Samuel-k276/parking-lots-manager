@@ -28,26 +28,40 @@ History createHistory (char *parkName, Time entryTime) {
     return thisHistory;
 }
 
-void addEntry (char *parkName, Car *thisCar, Time time) {
-    Car car = *thisCar;
+void addEntry (char *parkName, Car thisCar, Time time) {
     History newHistory = createHistory(parkName, time);
-    History current = car->history;
-    if (car->history == NULL) {
-        car->history = newHistory;
+    if (thisCar->history == NULL) {
+        thisCar->history = newHistory;
     } else {
-        while (current->next != NULL) {
+        History current = thisCar->history;
+        History prev = NULL;
+
+        while (current != NULL && strcmp(current->parkName, parkName) <= 0) {
+            prev = current;
             current = current->next;
         }
-        current->next = newHistory;
+
+        newHistory->next = current;
+        if (prev == NULL) {
+            thisCar->history = newHistory; 
+        } else {
+            prev->next = newHistory; 
+        }
     }
-    car->isParked = PARKED;  
+    thisCar->isParked = PARKED;  
 }
 
 
-void addExit(History *lastHistory, Car car, Time time) {
-    History history = *lastHistory;
-    history->exitTime = time;
+Time addExit(char *parkName, Car car, Time time) {
+    History history = car->history;
+    History prev = car->history;
+    while (history != NULL && strcmp(history->parkName, parkName) <= 0) {
+        prev = history;
+        history = history->next;
+    }
+    prev->exitTime = time;
     car->isParked = NOTPARKED;
+    return prev->entryTime;
 }
 
 short invalidLicensePlate(char license[LICENSESIZE]) {
@@ -79,25 +93,14 @@ char* licenseToString(char license[LICENSESIZE]) {
     return string;
 }
 
-
-History lastHistory(Car car) {
-    if (car == NULL) return NULL;
-    if (car->history == NULL) return NULL;
-    History current = car->history;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-    return current;
-}
-
 void printHistory(Car car) {
     History current = car->history;
     while (current != NULL) {
-        printf("%s %02d-%02d-%04d %02d:%02d ", 
+        printf("%s %02d-%02d-%04d %02d:%02d", 
                 current->parkName, current->entryTime.date.day, current->entryTime.date.month,
                 current->entryTime.date.year, current->entryTime.hours.hours, current->entryTime.hours.minutes);
         if (current->exitTime.date.day != 0) {
-            printf("%02d-%02d-%04d %02d:%02d", 
+            printf(" %02d-%02d-%04d %02d:%02d", 
                 current->exitTime.date.day, current->exitTime.date.month, current->exitTime.date.year,
                 current->exitTime.hours.hours, current->exitTime.hours.minutes);
         }
@@ -106,6 +109,7 @@ void printHistory(Car car) {
         current = current->next;
     }
 }
+
 
 void freeCar(Car car) {
     freeHistory(car);

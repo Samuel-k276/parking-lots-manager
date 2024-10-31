@@ -69,7 +69,7 @@ void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
         putCar(carMap, license, car);
     }
     
-    addEntry(parkName, &car, newTime);
+    addEntry(parkName, car, newTime);
     oneLessFreeSpot(park);
     changeTime(time, newTime);
 
@@ -78,7 +78,6 @@ void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
 
 void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime) {
     Car car;
-    History lastHistoryOfCar;
     ListNode node = findListNode(parkName, headNode);
 
     if (node == NULL) {
@@ -97,22 +96,20 @@ void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
         return;
     }
 
-    lastHistoryOfCar = lastHistory(car);
-
     if (invalidTime(newTime) || mostRecent(*time, newTime)) {
         printf("invalid date.\n");
         return;
     }
 
-    addExit(&lastHistoryOfCar, car, newTime);
+    Time entryTime = addExit(parkName, car, newTime);
     oneMoreFreeSpot(park);
     changeTime(time, newTime);
     char *licenseString = licenseToString(car->license);
-    printf("%s %02d-%02d-%04d %02d:%02d %02d-%02d-%04d %02d:%02d %.2f\n", licenseString, lastHistoryOfCar->entryTime.date.day, 
-                                                    lastHistoryOfCar->entryTime.date.month, lastHistoryOfCar->entryTime.date.year, 
-                                                    lastHistoryOfCar->entryTime.hours.hours, lastHistoryOfCar->entryTime.hours.minutes, 
+    printf("%s %02d-%02d-%04d %02d:%02d %02d-%02d-%04d %02d:%02d %.2f\n", licenseString, entryTime.date.day, 
+                                                    entryTime.date.month, entryTime.date.year, 
+                                                    entryTime.hours.hours, entryTime.hours.minutes, 
                                                     newTime.date.day, newTime.date.month, newTime.date.year, newTime.hours.hours, newTime.hours.minutes,
-                                                    calculateBilling(park->prices, lastHistoryOfCar->entryTime, newTime));   
+                                                    calculateBilling(park->prices, entryTime, newTime));   
     free(licenseString);
 }
 
