@@ -18,11 +18,11 @@ struct park {
     PricesType billing;
 };
 
-Park createPark (const char* name, int capacity, PricesType x, PricesType y, PricesType z) {
+Park createPark (char* name, int capacity, PricesType x, PricesType y, PricesType z) {
     Park thisPark = (Park)malloc(sizeof(struct park));
-
-    strcpy(thisPark->name, name);
-    thisPark->capacity = thisPark->freeSpots = capacity;
+    thisPark->name = (char *)name;
+    thisPark->capacity = capacity;
+    thisPark->freeSpots = capacity;
     thisPark->prices = createPrices(x, y, z);
     thisPark->billing = 0;
 

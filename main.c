@@ -10,26 +10,25 @@ int main() {
     Time time = time0();
 
     char c = getchar();
-    char *name;
     while (c != 'q') {
         switch(c) {
             case 'p':
-                if (getchar() == '\0')
+                if (getchar() == '\n')
                     commandP0(headNode);
                 else {
-                    inputToCommandP1(headNode);
+                    inputToCommandP1(&headNode);
                 }
                 break;
             case 'e':
-
+                break;
             case 's':
-
+                break;
             case 'v':
-
+                break;
             case 'f':
-
+                break;
             case 'r':
-
+                break;
             default:
                 break;
         }
@@ -42,17 +41,16 @@ int main() {
 }
 
 void freeAll(ListNode headNode, HashMap carMap) {
-    freeCarHashMap(carMap);
-    freeList(headNode);
+    if (carMap != NULL) freeCarHashMap(carMap);
+    if (headNode != NULL) freeList(headNode);
 }
 
-void inputToCommandP1(ListNode headNode) {
+void inputToCommandP1(ListNode *headNode) {
     char *name = readName();
     int capacity;
     PricesType x, y, z;
     scanf("%d %f %f %f", &capacity, &x, &y, &z);
     commandP1(headNode, name, capacity, x, y, z);
-    free(name);
 }
 
 char* readName() {

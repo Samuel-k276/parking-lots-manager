@@ -9,7 +9,7 @@ short invalidCapacity (int capacidade);
 short invalidCost (PricesType x, PricesType y, PricesType z);
 short equalPark (Park park1, Park park2);
 
-Park createPark (const char *name, int capacity, PricesType x, PricesType y, PricesType z);
+Park createPark (char *name, int capacity, PricesType x, PricesType y, PricesType z);
 Prices createPrices(PricesType x, PricesType y, PricesType z);
 
 void oneLessFreeSpot (Park park);

@@ -14,11 +14,12 @@ typedef struct carHistory *History;
 short isParked (Car thisCar);
 
 //constructors
+Car createCar (char license[LICENSESIZE]);
 History createHistory (char *parkName, Time entryTime);
 void addHistory (History beginOfHistory, History historyToAdd);
-Car createCar (char license[LICENSESIZE]);
 void addEntry (char *parkName, Car thisCar, Time time);
 short invalidLicensePlate(char license[LICENSESIZE]);
+short invalidPair (char a, char b);
 void freeHistory(Car car);
 
 

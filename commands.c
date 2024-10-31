@@ -8,8 +8,8 @@ void commandP0 (ListNode headNode) {
     printAllNodes(headNode);
 }
 
-void commandP1 (ListNode headNode, char* name, int capacity, PricesType x, PricesType y, PricesType z) {
-    if (nodeExists(name, headNode)) {
+void commandP1 (ListNode *headNode, char* name, int capacity, PricesType x, PricesType y, PricesType z) {
+    if (nodeExists(name, *headNode)) {
         printf("%s: parking already exists.\n", name);
         return;
     }
@@ -24,13 +24,12 @@ void commandP1 (ListNode headNode, char* name, int capacity, PricesType x, Price
         return;
     }
 
-    if (tooManyParks (headNode)) {
+    if (tooManyParks (*headNode)) {
         printf("too many parks.\n");
         return;
     }
-
+    
     Park newPark = createPark(name, capacity, x, y, z);
-    free(name);
     appendListNode(createListNode(newPark), headNode);
 }
 

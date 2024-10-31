@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "cars.h"
 
@@ -70,9 +71,29 @@ void addExit(char *parkName, Car thisCar, Time time) {
 }
 
 short invalidLicensePlate(char license[LICENSESIZE]) {
-    return 1;
+    if (invalidPair(license[0], license[1])
+        || invalidPair(license[2], license[3])
+        || invalidPair(license[4], license[5])) {
+        return 1;
+    }
+    return (isupper(license[0]) && isupper(license[2]) && isupper(license[4])) ||
+           (isdigit(license[0]) && isdigit(license[2]) && isdigit(license[4]));
 }
 
+short invalidPair (char a, char b) {
+    return !('0' <= a <= '9' && '0' <= b <= '9' ||
+             'A' <= a <= 'Z' && 'A' <= b <= 'Z' );
+
+}
 void freeHistory(Car car) {
+    History current = car->history;
+    History next;
+
+    while (current != NULL) {
+        next = current->next;
+        free(current->parkName);
+        free(current);
+        current = next;
+    }
     
 }

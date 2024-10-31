@@ -7,6 +7,6 @@
 char* readName();
 void freeAll(ListNode headNode, HashMap carMap);
 
-void inputToCommandP1(ListNode headNode);
+void inputToCommandP1(ListNode *headNode);
 
 #endif

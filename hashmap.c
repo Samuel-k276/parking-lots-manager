@@ -25,7 +25,7 @@ unsigned int hash(char key[LICENSESIZE]) {
 }
 
 HashMap createCarHashMap() {
-    HashMap hashMap = (HashMap) malloc(sizeof(HashMap));
+    HashMap hashMap = (HashMap) malloc(sizeof(struct HashMap));
     for (int i = 0; i < HASHSIZE; i++) {
         hashMap->table[i] = NULL;
     }
@@ -67,15 +67,11 @@ void freeCarHashMap(HashMap map) {
         Pair pair = map->table[i];
         while (pair != NULL) {
             Pair next = pair->next;
-            free(pair->key);
+            if (pair->value != NULL)
+                freeHistory(pair->value);
             free(pair);
             pair = next;
         }
-    }
-    for (int i = 0; i < HASHSIZE; i++) {
-        freeHistory(map->table[i]->value);
-    }
-    
-    free(map->table);
+    }   
     free(map);
 }

@@ -21,8 +21,12 @@ ListNode createListNode(Park park) {
     return thisNode;
 }
 
-void appendListNode(ListNode node, ListNode beginOfList) {
-    ListNode current = beginOfList;
+void appendListNode(ListNode node, ListNode *beginOfList) {
+    if (*beginOfList == NULL) {
+        *beginOfList = node;
+        return;
+    }
+    ListNode current = *beginOfList;
     while (current->next != NULL) {
         current = current->next;
     }
@@ -76,18 +80,13 @@ void freeList(ListNode headNode) {
     if (headNode == NULL)
         return;
 
-    if (headNode->next == NULL) {
-        freePark(headNode->park);
-        free(headNode);
-        return;
-    }
+    ListNode current = headNode;
+    ListNode nextNode;        
 
-    while (headNode->next != NULL) {
-        headNode = headNode->next;
-        freePark(headNode->prev->park);
-        free(headNode->prev);
+    while (current != NULL) {
+        nextNode = current->next;  
+        freePark(current->park);    
+        free(current);              
+        current = nextNode;         
     }
-
-    freePark(headNode->park);
-    free(headNode);
 }
