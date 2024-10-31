@@ -32,6 +32,7 @@ short invalidLicensePlate(char license[LICENSESIZE]);
 short invalidPair (char a, char b);
 char* licenseToString(char license[LICENSESIZE]);
 History lastHistory(Car car);
+void printHistory(Car car);
 void addExit(History *lastHistory, Car car, Time time);
 void freeHistory(Car car);
 

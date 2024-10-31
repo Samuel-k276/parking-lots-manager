@@ -90,6 +90,23 @@ History lastHistory(Car car) {
     return current;
 }
 
+void printHistory(Car car) {
+    History current = car->history;
+    while (current != NULL) {
+        printf("%s %02d-%02d-%04d %02d:%02d ", 
+                current->parkName, current->entryTime.date.day, current->entryTime.date.month,
+                current->entryTime.date.year, current->entryTime.hours.hours, current->entryTime.hours.minutes);
+        if (current->exitTime.date.day != 0) {
+            printf("%02d-%02d-%04d %02d:%02d", 
+                current->exitTime.date.day, current->exitTime.date.month, current->exitTime.date.year,
+                current->exitTime.hours.hours, current->exitTime.hours.minutes);
+        }
+        printf("\n");
+
+        current = current->next;
+    }
+}
+
 void freeCar(Car car) {
     freeHistory(car);
     free(car);

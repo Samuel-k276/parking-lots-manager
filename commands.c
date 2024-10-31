@@ -117,3 +117,19 @@ void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
 }
 
 
+void commandV(HashMap carMap, char license[LICENSESIZE]) {
+    Car car;
+
+    if (invalidLicensePlate(license)) {
+        printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
+        return;
+    }
+
+    car = getCar(carMap, license);
+    if (car == NULL) {
+        printf("%c%c-%c%c-%c%c: no entries found in any parking.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
+        return;
+    }
+
+    printHistory(car);
+}
