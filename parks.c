@@ -56,13 +56,14 @@ void freePark(Park thisPark) {
 PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
     PricesType billing = 0;
     int difference = timeDifference(exitTime, entryTime);
+
     while (difference > (60*24)) {
         billing += prices.z;
         difference -= 60*24;
     }
 
     int count = 0;
-    while (difference > 0 && count < 3) {
+    while (difference > 0 && count < 4) {
         billing += prices.x;
         difference -= 15;
         count++;

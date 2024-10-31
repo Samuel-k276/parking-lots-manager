@@ -20,9 +20,10 @@ HashMap createCarHashMap() {
     return hashMap;
 }
 
-void putCar(HashMap hashMap, char key[LICENSESIZE], Car value) {
+void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value) {
     unsigned int hashval = hash(key);
-    Pair pair = hashMap->table[hashval];
+    HashMap carMap = *hashMap;
+    Pair pair = carMap->table[hashval];
 
     while (pair != NULL) {
         pair = pair->next;
@@ -31,8 +32,8 @@ void putCar(HashMap hashMap, char key[LICENSESIZE], Car value) {
     pair = (Pair) malloc(sizeof(Pair));
     strcpy(pair->key, key);
     pair->value = value;
-    pair->next = hashMap->table[hashval];
-    hashMap->table[hashval] = pair;
+    pair->next = carMap->table[hashval];
+    carMap->table[hashval] = pair;
 }
 
 Car getCar(HashMap hashMap, char key[LICENSESIZE]) {

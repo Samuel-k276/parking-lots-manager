@@ -28,29 +28,25 @@ History createHistory (char *parkName, Time entryTime) {
     return thisHistory;
 }
 
-void addHistory (History beginOfHistory, History historyToAdd) {
-    History current = beginOfHistory;
-    if (beginOfHistory == NULL) {
-        beginOfHistory = historyToAdd;
-        return;
-    }
-
-    while (current->next != NULL) {
-        current = current->next;
-    }
-
-    current->next = historyToAdd;
-}
-
-void addEntry (char *parkName, Car thisCar, Time time) {
+void addEntry (char *parkName, Car *thisCar, Time time) {
+    Car car = *thisCar;
     History newHistory = createHistory(parkName, time);
-    addHistory(thisCar->history, newHistory);
-    thisCar->isParked = PARKED;  
+    History current = car->history;
+    if (car->history == NULL) {
+        car->history = newHistory;
+    } else {
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newHistory;
+    }
+    car->isParked = PARKED;  
 }
 
 
-void addExit(History lastHistory, Car car, Time time) {
-    lastHistory->exitTime = time;
+void addExit(History *lastHistory, Car car, Time time) {
+    History history = *lastHistory;
+    history->exitTime = time;
     car->isParked = NOTPARKED;
 }
 
@@ -86,7 +82,7 @@ char* licenseToString(char license[LICENSESIZE]) {
 
 History lastHistory(Car car) {
     if (car == NULL) return NULL;
-    if (car->isParked == NOTPARKED) return NULL;
+    if (car->history == NULL) return NULL;
     History current = car->history;
     while (current->next != NULL) {
         current = current->next;

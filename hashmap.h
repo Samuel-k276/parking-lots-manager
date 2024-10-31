@@ -17,7 +17,7 @@ typedef struct HashMap {
 
 unsigned int hash(char key[LICENSESIZE]);
 HashMap createCarHashMap();
-void putCar(HashMap hashMap, char key[LICENSESIZE], Car value);
+void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value);
 Car getCar(HashMap hashMap, char key[LICENSESIZE]);
 void freeCarHashMap(HashMap hashMap);
 

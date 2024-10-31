@@ -50,7 +50,9 @@ Time newTime(int day, int month, int year, int hours, int minutes) {
     return time;
 }
 
-int timeDifference (Time recent, Time old) {
+int timeDifference (Time first, Time after) {
+    Time recent = first;
+    Time old = after; 
     short days;
     if (old.date.month > recent.date.month) {
         days = -1*daysDifference(old, recent);
@@ -66,7 +68,9 @@ int timeDifference (Time recent, Time old) {
             ((recent.date.year - old.date.year)*365 + days)*24*60);
 }
 
-short daysDifference (Time recent, Time old) {
+short daysDifference (Time first, Time after) {
+    Time recent = first;
+    Time old = after;
     short daysDifference;
     while (recent.date.month != old.date.month) {
         recent.date.month -= 1;
