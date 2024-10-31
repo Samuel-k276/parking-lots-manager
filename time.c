@@ -37,23 +37,33 @@ short invalidTime(Time date) {
 }
 
 //return 1 if date 1 is the most recent
-short mostRecent (Time time0, Time time1) {
-    if (time0.date.year > time1.date.year) return 1;
-    if (time0.date.year < time1.date.year) return 0;
-    if (time0.date.month > time1.date.month) return 1;
-    if (time0.date.month < time1.date.month) return 0;
-    if (time0.date.day > time1.date.day) return 1;
-    if (time0.date.day < time1.date.day) return 0;
-    if (time0.hours.hours > time1.hours.hours) return 1;
-    if (time0.hours.hours < time1.hours.hours) return 0;
-    if (time0.hours.minutes > time1.hours.minutes) return 1;
-    if (time0.hours.minutes < time1.hours.minutes) return 0;
+short mostRecent (Time time1, Time time2) {
+    if (time1.date.year > time2.date.year) return 1;
+    if (time1.date.year < time2.date.year) return 0;
+    if (time1.date.month > time2.date.month) return 1;
+    if (time1.date.month < time2.date.month) return 0;
+    if (time1.date.day > time2.date.day) return 1;
+    if (time1.date.day < time2.date.day) return 0;
+    if (time1.hours.hours > time2.hours.hours) return 1;
+    if (time1.hours.hours < time2.hours.hours) return 0;
+    if (time1.hours.minutes > time2.hours.minutes) return 1;
+    if (time1.hours.minutes < time2.hours.minutes) return 0;
     return 0;
 }
 
 void changeTime (Time *dateToChange, Time newDate) {
-    free(dateToChange);
-    dateToChange = &newDate;
+    *dateToChange = newDate;
+}
+
+Time newTime(int day, int month, int year, int hours, int minutes) {
+    Time time;
+    time.date.day = day;
+    time.date.month = month;
+    time.date.year = year;
+    time.hours.hours = hours;
+    time.hours.minutes = minutes;
+
+    return time;
 }
 
 int timeDiference (Time recent, Time old) {

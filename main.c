@@ -20,6 +20,7 @@ int main() {
                 }
                 break;
             case 'e':
+                inputToCommandE(&headNode, &carMap, &time);
                 break;
             case 's':
                 break;
@@ -53,8 +54,20 @@ void inputToCommandP1(ListNode *headNode) {
     commandP1(headNode, name, capacity, x, y, z);
 }
 
+void inputToCommandE(ListNode *headNode, HashMap *carMap, Time *time) {
+    getchar();
+    char *name = readName();
+    char license[LICENSESIZE];
+    int day, month, year, hours, minutes;
+    scanf("%c%c-%c%c-%c%c %d-%d-%d %d:%d", &license[0], &license[1], &license[2], &license[3],
+                                    &license[4], &license[5], &day, &month, &year, &hours, &minutes);
+    license[6] = '\0';
+    Time new = newTime(day, month, year, hours, minutes);
+    commandE(headNode, carMap, time, name, license, new);
+}
+
 char* readName() {
-    char c = getchar();
+    char c = getchar(); 
     char end = ' ';
     char *name = (char *)malloc(sizeof(char));;
     int i;
@@ -68,7 +81,7 @@ char* readName() {
         c = getchar();
         name = (char *)realloc(name, (i+2)* sizeof(char));
     }
-
+    if (end == '"') getchar();
     name[i] = '\0';
     return name;
 }

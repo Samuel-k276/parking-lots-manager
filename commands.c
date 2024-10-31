@@ -33,14 +33,16 @@ void commandP1 (ListNode *headNode, char* name, int capacity, PricesType x, Pric
     appendListNode(createListNode(newPark), headNode);
 }
 
-void comandoE(ListNode headNode, HashMap carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime) {
+void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime) {
     Car car;
-    Park park = findListNode(parkName, headNode)->park;
+    ListNode node = findListNode(parkName, headNode);
 
-    if (park == NULL) {
+    if (node == NULL) {
         printf("%s: no such parking.\n", parkName);
         return;
     }
+
+    Park park = node->park;
 
     if (isParkFull(park)) {
         printf("%s: parking is full.\n", parkName);
@@ -48,21 +50,28 @@ void comandoE(ListNode headNode, HashMap carMap, Time *time, char *parkName, cha
     }
 
     if (invalidLicensePlate(license)) {
-        printf("%s: invalid licence plate.\n", license);
+        printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
         return;
     }
 
-    if (isParked(car = getCar(carMap, license))) {
-        printf("%s: invalid vehicle entry.\n", license);
+    if (isParked(car = getCar(*carMap, license))) {
+        printf("%c%c-%c%c-%c%c: invalid vehicle entry.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
+        return;
+    }
+
+    if (invalidTime(newTime) || mostRecent(*time, newTime)) {
+        printf("invalid date.\n");
         return;
     }
 
     if (car == NULL) {
         car = createCar(license);
-        putCar(carMap, license, car);
+        putCar(*carMap, license, car);
     }
     
     addEntry(parkName, car, newTime);
     oneLessFreeSpot(park);
     changeTime(time, newTime);
+
+    printf("%s %d\n", park->name, park->freeSpots);
 }

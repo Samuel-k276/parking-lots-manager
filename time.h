@@ -9,7 +9,7 @@ typedef struct time Time;
 
 Time time0 ();
 void changeTime (Time *dateToChange, Time newDate);
-
+Time newTime(int day, int month, int year, int hours, int minutes);
 
 short invalidTime (Time date);
 short mostRecent (Time data1, Time data2);
