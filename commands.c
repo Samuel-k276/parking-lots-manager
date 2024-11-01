@@ -34,6 +34,7 @@ void commandP1 (ListNode *headNode, char* name, int capacity, PricesType x, Pric
 }
 
 void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime) {
+
     Car car;
     ListNode node = findListNode(parkName, headNode);
 

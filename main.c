@@ -99,6 +99,7 @@ void inputToCommandR(ListNode *headNode, HashMap *carMap) {
     getchar();
     char *name = readName();
     commandR(headNode, name, carMap);
+    free(name);
 }
 
 char* readName() {

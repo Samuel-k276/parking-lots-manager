@@ -29,10 +29,14 @@ void appendListNode(ListNode node, ListNode *beginOfList) {
 
 ListNode findListNode(char *name, ListNode *headNode) {
     ListNode current = *headNode;
-    while (current != NULL && strcmp(current->park->name, name)) {
+    while (current != NULL) {
+        if (current->park != NULL && current->park->name != NULL && strcmp(current->park->name, name) == 0) {
+            return current;
+        }
         current = current->next;
     }
-    return current;
+
+    return NULL;
 }
 
 short nodeExists(char *name, ListNode headNode) {
@@ -50,17 +54,18 @@ short tooManyParks(ListNode headNode) {
     return i;
 }
 
-void removeListNode(char *name, ListNode *headNode) {
-    ListNode node = findListNode(name, headNode);
+void removeListNode(char *name, ListNode *head) {
+    ListNode node = findListNode(name, head);
     
-    if (node == NULL) return;
+    if (*head == node) {
+        *head = node->next;
+    }
 
-    if (node->prev == NULL) {
-        *headNode = node->next;
-    } else if (node->next == NULL) {
-        node->prev->next = NULL;
-    } else {
+    if (node->prev != NULL) {
         node->prev->next = node->next;
+    }
+
+    if (node->next != NULL) {
         node->next->prev = node->prev;
     }
     freePark(node->park);

@@ -8,6 +8,7 @@
 Car createCar (char license[LICENSESIZE]) {
     Car thisCar = (Car)malloc(sizeof(struct carro));
     strcpy(thisCar->license, license);
+    thisCar->history = NULL;
     thisCar->isParked = NOTPARKED;
     thisCar->faturacao = 0;
 
@@ -24,6 +25,7 @@ History createHistory (char *parkName, Time entryTime) {
     History thisHistory = (History)malloc(sizeof(struct carHistory));
     thisHistory->entryTime = entryTime;
     thisHistory->parkName = parkName;
+    thisHistory->next = NULL;
     
     return thisHistory;
 }
@@ -48,7 +50,7 @@ void addEntry (char *parkName, Car thisCar, Time time) {
             prev->next = newHistory; 
         }
     }
-    thisCar->isParked = PARKED;  
+    thisCar->isParked = PARKED; 
 }
 
 
@@ -115,6 +117,9 @@ void removeCarHistory(char *name, Car car) {
     History prev = NULL;
     while (current != NULL) {
         if (strcmp(current->parkName, name) == 0) {
+            if (current->exitTime.date.day == 0) {
+                car->isParked = NOTPARKED;
+            }   
             if (prev == NULL) {
                 car->history = current->next;
                 free(current->parkName);
