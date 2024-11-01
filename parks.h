@@ -2,6 +2,7 @@
 #define __PARKS_H__
 
 #include "time.h"
+#include "cars.h"
 
 typedef float PricesType;
 typedef struct prices {
@@ -10,12 +11,26 @@ typedef struct prices {
     PricesType z;
 } Prices;
 
+typedef struct billing {
+    char license[LICENSESIZE];
+    Hours hours;
+    PricesType value;
+    struct billing *next;
+} *Billing;
+
+typedef struct dailyBilling {
+    Date date;
+    PricesType value;
+    Billing billList;
+    struct dailyBilling *next;
+} *DailyBilling;
+
 typedef struct park {
     char* name;
     int capacity;
     int freeSpots;
     Prices prices;
-    PricesType billing;
+    DailyBilling billing;
 } *Park;
 
 
@@ -32,5 +47,12 @@ short isParkFull (Park park);
 PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime);
 
 void freePark (Park thisPark);
+
+void addToParkBilling(Park park, char license[LICENSESIZE], Time time, PricesType billed);
+Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed);
+DailyBilling newDailyBilling(Billing firstBill, Date date);
+DailyBilling getDailyBilling(Park park, Date date);
+void printBilling(Park park);
+void printDailyBilling(Park park, Date date);
 
 #endif

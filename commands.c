@@ -103,30 +103,57 @@ void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
 
     Time entryTime = addExit(parkName, car, newTime);
     oneMoreFreeSpot(park);
+    PricesType billed = calculateBilling(park->prices, entryTime, newTime);
+   // addToParkBilling(park, license, newTime, billed);
     changeTime(time, newTime);
     char *licenseString = licenseToString(car->license);
     printf("%s %02d-%02d-%04d %02d:%02d %02d-%02d-%04d %02d:%02d %.2f\n", licenseString, entryTime.date.day, 
                                                     entryTime.date.month, entryTime.date.year, 
                                                     entryTime.hours.hours, entryTime.hours.minutes, 
                                                     newTime.date.day, newTime.date.month, newTime.date.year, newTime.hours.hours, newTime.hours.minutes,
-                                                    calculateBilling(park->prices, entryTime, newTime));   
+                                                    billed);   
     free(licenseString);
 }
 
 
 void commandV(HashMap carMap, char license[LICENSESIZE]) {
-    Car car;
-
     if (invalidLicensePlate(license)) {
         printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
         return;
     }
 
-    car = getCar(carMap, license);
+    Car car = getCar(carMap, license);
     if (car == NULL) {
         printf("%c%c-%c%c-%c%c: no entries found in any parking.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
         return;
     }
 
     printHistory(car);
+}
+
+void commandF0(ListNode headNode, char *name) {
+    ListNode node = findListNode(name, &headNode);
+
+    if (node == NULL) {
+        printf("%s: no such parking.\n", name);
+        return;
+    }
+
+    printBilling(node->park);
+}
+
+void commandF1(ListNode headNode, char *name, Date date, Date currentDate) {
+    ListNode node = findListNode(name, &headNode);
+
+    if (node == NULL) {
+        printf("%s: no such parking.\n", name);
+        return;
+    }
+
+    if (invalidDate(date) || !mostRecentDate(currentDate, date)) {
+        printf("invalid date.\n");
+        return;
+    }
+
+    printDailyBilling(node->park, date);
 }

@@ -29,6 +29,7 @@ int main() {
                 inputToCommandV(carMap);
                 break;
             case 'f':
+                inputToCommandF(headNode, time.date);
                 break;
             case 'r':
                 break;
@@ -78,22 +79,38 @@ void inputToCommandV(HashMap carMap) {
     commandV(carMap, license);
 }
 
+void inputToCommandF(ListNode headNode, Date currentDate) {
+    getchar();
+    char *name = readName();
+    if (getchar() == '\n') {
+        commandF0(headNode, name);
+    } else {
+        int day, month, year;
+        scanf("%d-%d-%d", &day, &month, &year);
+        Date date = newDate(day, month, year);
+        commandF1(headNode, name, date, currentDate);
+    }
+}
+
 char* readName() {
     char c = getchar(); 
-    char end = ' ';
+    char end1 = ' ';
+    char end2 = '\n';
     char *name = (char *)malloc(sizeof(char));;
     int i;
     if (c == '"') {
-        end = c;
+        end1 = '"';
+        end2 = '"';
         c = getchar();
     }
 
-    for (i = 0; c != end; i++) {
+    for (i = 0; c != end1 && c != end2; i++) {
         name[i] = c;
         c = getchar();
         name = (char *)realloc(name, (i+2)* sizeof(char));
     }
-    if (end == '"') getchar();
+    if (end1 == '"') c = getchar();
+    if (c == '\n') ungetc(c, stdin);
     name[i] = '\0';
     return name;
 }

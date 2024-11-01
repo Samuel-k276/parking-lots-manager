@@ -25,6 +25,10 @@ short invalidTime (Time date);
 short mostRecent (Time data1, Time data2);
 
 int timeDifference (Time recent, Time old);
-short daysDifference (Time recent, Time old);
+
+Date newDate(int day, int month, int year);
+short equalDate(Date d0, Date d1);
+short mostRecentDate(Date d0, Date d1);
+short invalidDate(Date date);
 
 #endif

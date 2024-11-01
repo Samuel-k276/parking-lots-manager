@@ -9,6 +9,8 @@ void commandP1 (ListNode *headNode, char* name, int capacity, PricesType x, Pric
 void commandE (ListNode *headNode, HashMap *carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime);
 void commandS (ListNode *headNode, HashMap *carMap, Time *time, char *parkName, char license[LICENSESIZE], Time newTime);
 void commandV (HashMap carMap, char license[LICENSESIZE]);
+void commandF0 (ListNode headNode, char *name);
+void commandF1 (ListNode headNode, char *name, Date date, Date currentDate);
 
 
 #endif

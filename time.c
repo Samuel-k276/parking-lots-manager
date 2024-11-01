@@ -50,46 +50,42 @@ Time newTime(int day, int month, int year, int hours, int minutes) {
     return time;
 }
 
-int timeDifference (Time after, Time first) {
+int timeDifference (Time entry, Time exit) {
     int totalMinutes = 0;
     
-    while (first.date.day != after.date.day || 
-           first.date.month != after.date.month || 
-           first.date.year != after.date.year) {
-        
-        totalMinutes += 24 * 60;
+    totalMinutes += exit.hours.minutes - entry.hours.minutes;
+    totalMinutes += (exit.hours.hours - entry.hours.hours) * 60;
+    totalMinutes += (exit.date.day - entry.date.day) * 24 * 60;
+    totalMinutes += (exit.date.year - entry.date.year) * 365 * 24 * 60;
 
-        first.date.day++;
-
-        if (first.date.day > daysInTheMonth[first.date.month - 1]) {
-            first.date.day = 1; 
-            first.date.month++;  
-
-            if (first.date.month > 12) {
-                first.date.month = 1; 
-                first.date.year++;     
-            }
-        }
+    for (int i = entry.date.month; i < exit.date.month; i++) {
+        totalMinutes += daysInTheMonth[i - 1] * 24 * 60;
     }
-
-    totalMinutes += (after.hours.hours - first.hours.hours) * 60;
-    totalMinutes += (after.hours.minutes - first.hours.minutes);
-
     return totalMinutes;
 }
 
-short daysDifference (Time first, Time after) {
-    Time recent = first;
-    Time old = after;
-    short daysDifference;
-    while (recent.date.month != old.date.month || recent.date.year != old.date.year) {
-        daysDifference += daysInTheMonth[recent.date.month - 1];
-        recent.date.month--;
-        if (recent.date.month == 0) {
-            recent.date.month = 12;
-            recent.date.year--;
-        }
-    }
+Date newDate(int day, int month, int year) {
+    Date date;
+    date.day = day;
+    date.month = month;
+    date.year = year;
+    return date;
+}
 
-    return daysDifference;
+short equalDate(Date d0, Date d1) {
+    return (d0.day == d1.day && d0.month == d1.month && d0.year == d1.year);
+}
+
+short mostRecentDate(Date d0, Date d1) {
+    if (d0.year > d1.year) return 1;
+    if (d0.year < d1.year) return 0;
+    if (d0.month > d1.month) return 1;
+    if (d0.month < d1.month) return 0;
+    if (d0.day > d1.day) return 1;
+    if (d0.day < d1.day) return 0;
+    return 0;
+}
+
+short invalidDate(Date date) {
+    return (date.month > 12 || date.month < 1 || date.day < 1 || date.day > daysInTheMonth[date.month - 1]);
 }
