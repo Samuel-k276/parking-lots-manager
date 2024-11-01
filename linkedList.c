@@ -22,8 +22,10 @@ void appendListNode(ListNode node, ListNode *beginOfList) {
     while (current->next != NULL) {
         current = current->next;
     }
+    node->prev = current;
     current->next = node;
 }
+
 
 ListNode findListNode(char *name, ListNode *headNode) {
     ListNode current = *headNode;
@@ -50,12 +52,17 @@ short tooManyParks(ListNode headNode) {
 
 void removeListNode(char *name, ListNode *headNode) {
     ListNode node = findListNode(name, headNode);
-    if (node->prev == NULL) {
-        headNode = &node->next;
-        return;
-    }
+    
+    if (node == NULL) return;
 
-    node->prev->next = node->next;
+    if (node->prev == NULL) {
+        *headNode = node->next;
+    } else if (node->next == NULL) {
+        node->prev->next = NULL;
+    } else {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
     freePark(node->park);
     free(node);
 }

@@ -32,6 +32,7 @@ int main() {
                 inputToCommandF(headNode, time.date);
                 break;
             case 'r':
+                inputToCommandR(&headNode, &carMap);
                 break;
             default:
                 break;
@@ -90,6 +91,12 @@ void inputToCommandF(ListNode headNode, Date currentDate) {
         Date date = newDate(day, month, year);
         commandF1(headNode, name, date, currentDate);
     }
+}
+
+void inputToCommandR(ListNode *headNode, HashMap *carMap) {
+    getchar();
+    char *name = readName();
+    commandR(headNode, name, carMap);
 }
 
 char* readName() {

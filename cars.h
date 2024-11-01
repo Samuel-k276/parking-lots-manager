@@ -31,7 +31,7 @@ void addEntry (char *parkName, Car thisCar, Time time);
 short invalidLicensePlate(char license[LICENSESIZE]);
 short invalidPair (char a, char b);
 char* licenseToString(char license[LICENSESIZE]);
-
+void removeCarHistory(char *name, Car car);
 void printHistory(Car car);
 Time addExit(char *parkName, Car car, Time time);
 void freeHistory(Car car);

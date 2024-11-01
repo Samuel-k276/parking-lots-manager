@@ -104,9 +104,10 @@ void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, c
     Time entryTime = addExit(parkName, car, newTime);
     oneMoreFreeSpot(park);
     PricesType billed = calculateBilling(park->prices, entryTime, newTime);
-   // addToParkBilling(park, license, newTime, billed);
+    addToParkBilling(park, license, newTime, billed);
     changeTime(time, newTime);
     char *licenseString = licenseToString(car->license);
+
     printf("%s %02d-%02d-%04d %02d:%02d %02d-%02d-%04d %02d:%02d %.2f\n", licenseString, entryTime.date.day, 
                                                     entryTime.date.month, entryTime.date.year, 
                                                     entryTime.hours.hours, entryTime.hours.minutes, 
@@ -156,4 +157,41 @@ void commandF1(ListNode headNode, char *name, Date date, Date currentDate) {
     }
 
     printDailyBilling(node->park, date);
+}
+
+void commandR (ListNode *headNode, char *name, HashMap *carMap) {
+    ListNode node = findListNode(name, headNode);
+
+    if (node == NULL) {
+        printf("%s: no such parking.\n", name);
+        return;
+    }
+    removeListNode(name, headNode);
+    removeEntries(name, carMap);
+    printListSorted(*headNode);
+}
+
+void printListSorted(ListNode headNode) {
+    if (headNode == NULL) return;
+    ListNode current = headNode;
+    char *list[MAXPARKS] = {NULL};
+    int count = 0;
+
+    while (current != NULL) {
+        int i = 0;
+        char *name = current->park->name;
+        while (i < count && strcmp(list[i], name) < 0) {
+            i++;
+        }
+        for (int j = count; j > i; j--) {
+            list[j] = list[j - 1];
+        }
+        list[i] = name;
+        count++;
+        current = current->next;
+    }
+
+    for (int i = 0; i < count; i++) {
+        printf("%s\n", list[i]);
+    }
 }

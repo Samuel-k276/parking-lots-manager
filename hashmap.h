@@ -20,5 +20,6 @@ HashMap createCarHashMap();
 void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value);
 Car getCar(HashMap hashMap, char key[LICENSESIZE]);
 void freeCarHashMap(HashMap hashMap);
+void removeEntries(char *name, HashMap *carMap);
 
 #endif

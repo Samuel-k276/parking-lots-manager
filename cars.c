@@ -110,6 +110,29 @@ void printHistory(Car car) {
     }
 }
 
+void removeCarHistory(char *name, Car car) {
+    History current = car->history;
+    History prev = NULL;
+    while (current != NULL) {
+        if (strcmp(current->parkName, name) == 0) {
+            if (prev == NULL) {
+                car->history = current->next;
+                free(current->parkName);
+                free(current);
+                current = car->history;
+            } else {
+                prev->next = current->next;
+                free(current->parkName);
+                free(current);
+                current = prev->next;
+            }
+
+        } else {
+            prev = current;
+            current = current->next;
+        }
+    }
+}
 
 void freeCar(Car car) {
     freeHistory(car);

@@ -64,3 +64,14 @@ void freeCarHashMap(HashMap map) {
     }   
     free(map);
 }
+
+void removeEntries(char *name, HashMap *carMap) {
+    HashMap carHashMap = *carMap;
+    for (int i = 0; i < HASHSIZE; i++) {
+        Pair pair = carHashMap->table[i];
+        while (pair != NULL) {
+            if (pair->value != NULL) removeCarHistory(name, pair->value);
+            pair = pair->next;
+        }
+    }
+}

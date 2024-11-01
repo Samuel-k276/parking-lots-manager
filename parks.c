@@ -50,6 +50,16 @@ short isParkFull (Park park) {
 
 void freePark(Park thisPark) {
     free(thisPark->name);
+    while (thisPark->billing != NULL) {
+        DailyBilling next = thisPark->billing->next;
+        while (thisPark->billing->billList != NULL) {
+            Billing nextBill = thisPark->billing->billList->next;
+            free(thisPark->billing->billList);
+            thisPark->billing->billList = nextBill;
+        }
+        free(thisPark->billing);
+        thisPark->billing = next;
+    }
     free(thisPark);
 }
 

@@ -11,6 +11,8 @@ void commandS (ListNode *headNode, HashMap *carMap, Time *time, char *parkName, 
 void commandV (HashMap carMap, char license[LICENSESIZE]);
 void commandF0 (ListNode headNode, char *name);
 void commandF1 (ListNode headNode, char *name, Date date, Date currentDate);
+void commandR (ListNode *headNode, char *name, HashMap *carMap);
+void printListSorted (ListNode headNode);
 
 
 #endif
