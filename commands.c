@@ -124,7 +124,7 @@ void commandV(HashMap carMap, char license[LICENSESIZE]) {
     }
 
     Car car = getCar(carMap, license);
-    if (car == NULL) {
+    if (car == NULL || car->history == NULL) {
         printf("%c%c-%c%c-%c%c: no entries found in any parking.\n", license[0], license[1], license[2], license[3], license[4], license[5]);
         return;
     }
@@ -151,7 +151,7 @@ void commandF1(ListNode headNode, char *name, Date date, Date currentDate) {
         return;
     }
 
-    if (invalidDate(date) || !mostRecentDate(currentDate, date)) {
+    if (invalidDate(date) || mostRecentDate(date, currentDate)) {
         printf("invalid date.\n");
         return;
     }

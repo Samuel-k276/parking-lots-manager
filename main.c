@@ -52,6 +52,7 @@ void freeAll(ListNode headNode, HashMap carMap) {
 
 void inputToCommandP1(ListNode *headNode) {
     char *name = readName();
+    
     int capacity;
     PricesType x, y, z;
     scanf("%d %f %f %f", &capacity, &x, &y, &z);
@@ -61,6 +62,7 @@ void inputToCommandP1(ListNode *headNode) {
 void inputToCommandEntryOrExit(ListNode *headNode, HashMap *carMap, Time *time, short type) {
     getchar();
     char *name = readName();
+    getchar();
     char license[LICENSESIZE];
     int day, month, year, hours, minutes;
     scanf("%c%c-%c%c-%c%c %d-%d-%d %d:%d", &license[0], &license[1], &license[2], &license[3],
@@ -117,7 +119,7 @@ char* readName() {
         name = (char *)realloc(name, (i+2)* sizeof(char));
     }
     if (end1 == '"') c = getchar();
-    if (c == '\n') ungetc(c, stdin);
+    if (c == '\n' || c == ' ') ungetc(c, stdin);
     name[i] = '\0';
     return name;
 }
