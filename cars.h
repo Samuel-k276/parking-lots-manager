@@ -22,18 +22,19 @@ typedef struct carro {
 } *Car;
 
 
-short isParked (Car thisCar);
-
-//constructors
-Car createCar (char license[LICENSESIZE]);
-History createHistory (char *parkName, Time entryTime);
-void addEntry (char *parkName, Car thisCar, Time time);
-short invalidLicensePlate(char license[LICENSESIZE]);
-short invalidPair (char a, char b);
-char* licenseToString(char license[LICENSESIZE]);
-void removeCarHistory(char *name, Car car);
-void printHistory(Car car);
+Car createCar(char license[LICENSESIZE]);
+History createHistory(char *parkName, Time entryTime);
+void addEntry(char *parkName, Car thisCar, Time time);
 Time addExit(char *parkName, Car car, Time time);
+
+short isParked(Car thisCar);
+short invalidLicensePlate(char license[LICENSESIZE]);
+short invalidPair(char a, char b);
+
+char* licenseToString(char license[LICENSESIZE]);
+void printHistory(Car car);
+
+void removeCarHistory(char *name, Car car);
 void freeHistory(Car car);
 void freeCar(Car car);
 

@@ -4,20 +4,20 @@
 
 #include "hashmap.h"
 
-unsigned int hash(char key[LICENSESIZE]) {
-    unsigned long int hashval = 0;
-    for (int i = 0; key[i] != '\0'; i++) {
-        hashval = key[i] + 31 * hashval;
-    }
-    return hashval % HASHSIZE;
-}
-
 HashMap createCarHashMap() {
     HashMap hashMap = (HashMap) malloc(sizeof(struct HashMap));
     for (int i = 0; i < HASHSIZE; i++) {
         hashMap->table[i] = NULL;
     }
     return hashMap;
+}
+
+unsigned int hash(char key[LICENSESIZE]) {
+    unsigned long int hashval = 0;
+    for (int i = 0; key[i] != '\0'; i++) {
+        hashval = key[i] + 31 * hashval;
+    }
+    return hashval % HASHSIZE;
 }
 
 void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value) {
@@ -50,6 +50,18 @@ Car getCar(HashMap hashMap, char key[LICENSESIZE]) {
     return NULL;
 }
 
+void removeEntries(char *name, HashMap *carMap) {
+    HashMap carHashMap = *carMap;
+    for (int i = 0; i < HASHSIZE; i++) {
+        Pair pair = carHashMap->table[i];
+        while (pair != NULL) {
+            if (pair->value != NULL) 
+                removeCarHistory(name, pair->value);
+            pair = pair->next;
+        }
+    }
+}
+
 void freeCarHashMap(HashMap *map) {
     if (*map == NULL) return; // Certifique-se de que não é NULL
 
@@ -66,17 +78,4 @@ void freeCarHashMap(HashMap *map) {
     }
     free(*map);   // Libera o hashmap
     *map = NULL;  // Define como NULL para evitar ponteiros pendentes
-}
-
-
-void removeEntries(char *name, HashMap *carMap) {
-    HashMap carHashMap = *carMap;
-    for (int i = 0; i < HASHSIZE; i++) {
-        Pair pair = carHashMap->table[i];
-        while (pair != NULL) {
-            if (pair->value != NULL) 
-                removeCarHistory(name, pair->value);
-            pair = pair->next;
-        }
-    }
 }

@@ -5,7 +5,7 @@
 
 #include "cars.h"
 
-Car createCar (char license[LICENSESIZE]) {
+Car createCar(char license[LICENSESIZE]) {
     Car thisCar = (Car)malloc(sizeof(struct carro));
     strcpy(thisCar->license, license);
     thisCar->history = NULL;
@@ -15,13 +15,7 @@ Car createCar (char license[LICENSESIZE]) {
     return thisCar;
 }
 
-short isParked (Car thisCar) {
-    if (thisCar == NULL)    
-        return NOTPARKED;
-    return thisCar->isParked;
-}
-
-History createHistory (char *parkName, Time entryTime) {
+History createHistory(char *parkName, Time entryTime) {
     History thisHistory = (History)malloc(sizeof(struct carHistory));
     thisHistory->entryTime = entryTime;
     thisHistory->exitTime = newTime(0, 0, 0, 0, 0);
@@ -31,7 +25,7 @@ History createHistory (char *parkName, Time entryTime) {
     return thisHistory;
 }
 
-void addEntry (char *parkName, Car thisCar, Time time) {
+void addEntry(char *parkName, Car thisCar, Time time) {
     History newHistory = createHistory(parkName, time);
     if (thisCar->history == NULL) {
         thisCar->history = newHistory;
@@ -54,7 +48,6 @@ void addEntry (char *parkName, Car thisCar, Time time) {
     thisCar->isParked = PARKED; 
 }
 
-
 Time addExit(char *parkName, Car car, Time time) {
     History history = car->history;
     History prev = car->history;
@@ -67,6 +60,12 @@ Time addExit(char *parkName, Car car, Time time) {
     return prev->entryTime;
 }
 
+short isParked(Car thisCar) {
+    if (thisCar == NULL)    
+        return NOTPARKED;
+    return thisCar->isParked;
+}
+
 short invalidLicensePlate(char license[LICENSESIZE]) {
     if (invalidPair(license[0], license[1])
         || invalidPair(license[2], license[3])
@@ -77,7 +76,7 @@ short invalidLicensePlate(char license[LICENSESIZE]) {
            (isdigit(license[0]) &&isdigit(license[2]) &&isdigit(license[4]));
 }
 
-short invalidPair (char a, char b) {
+short invalidPair(char a, char b) {
     return !(('0' <= a && a <= '9' && '0' <= b && b <= '9') ||
              ('A' <= a && a <= 'Z' && 'A' <= b && b <= 'Z'));
 }
@@ -143,11 +142,6 @@ void removeCarHistory(char *name, Car car) {
     }
 }
 
-void freeCar(Car car) {
-    freeHistory(car);
-    free(car);
-}
-
 void freeHistory(Car car) {
     History current = car->history;
     History next;
@@ -158,5 +152,9 @@ void freeHistory(Car car) {
         free(current);
         current = next;
     }
-    
+}
+
+void freeCar(Car car) {
+    freeHistory(car);
+    free(car);
 }

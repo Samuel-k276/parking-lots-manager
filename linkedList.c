@@ -13,20 +13,6 @@ ListNode createListNode(Park park) {
     return thisNode;
 }
 
-void appendListNode(ListNode node, ListNode *beginOfList) {
-    if (*beginOfList == NULL) {
-        *beginOfList = node;
-        return;
-    }
-    ListNode current = *beginOfList;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-    node->prev = current;
-    current->next = node;
-}
-
-
 ListNode findListNode(char *name, ListNode *headNode) {
     ListNode current = *headNode;
     while (current != NULL) {
@@ -40,19 +26,17 @@ ListNode findListNode(char *name, ListNode *headNode) {
     return NULL;
 }
 
-short nodeExists(char *name, ListNode headNode) {
-    return findListNode(name, &headNode) != NULL;
-}
-
-short tooManyParks(ListNode headNode) {
-    ListNode current = headNode;
-    int i = 0;
-    while (current != NULL) {
-        current = current->next;
-        i++;
+void appendListNode(ListNode node, ListNode *beginOfList) {
+    if (*beginOfList == NULL) {
+        *beginOfList = node;
+        return;
     }
-    if (i < MAXPARKS) i = 0;
-    return i;
+    ListNode current = *beginOfList;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    node->prev = current;
+    current->next = node;
 }
 
 void removeListNode(char *name, ListNode *head) {
@@ -71,6 +55,21 @@ void removeListNode(char *name, ListNode *head) {
     }
     freePark(node->park);
     free(node);
+}
+
+short nodeExists(char *name, ListNode headNode) {
+    return findListNode(name, &headNode) != NULL;
+}
+
+short tooManyParks(ListNode headNode) {
+    ListNode current = headNode;
+    int i = 0;
+    while (current != NULL) {
+        current = current->next;
+        i++;
+    }
+    if (i < MAXPARKS) i = 0;
+    return i;
 }
 
 void printAllNodes(ListNode headNode) {

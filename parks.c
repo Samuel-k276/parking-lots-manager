@@ -4,9 +4,23 @@
 
 #include "parks.h"
 
-Park createPark (char* name, int capacity, 
-    PricesType x, PricesType y, PricesType z) {
+short invalidCapacity(int capacidade) {
+    return (capacidade <= 0);
+}
 
+short invalidCost(PricesType x, PricesType y, PricesType z) {
+    return (x <= 0 || y <= 0 || z <= 0 || x >= y || y >= z);
+}
+
+short equalPark(Park park1, Park park2) {
+    return (strcmp(park1->name, park2->name) == 0);
+}
+
+short isParkFull(Park park) {
+    return park->freeSpots == 0;
+}
+
+Park createPark(char *name, int capacity, PricesType x, PricesType y, PricesType z) {
     Park thisPark = (Park)malloc(sizeof(struct park));
     thisPark->name = strdup(name);
     thisPark->capacity = capacity;
@@ -26,33 +40,15 @@ Prices createPrices(PricesType x, PricesType y, PricesType z) {
     return thisPrices;
 }
 
-short invalidCapacity (int capacidade) {
-    return (capacidade <= 0);
-}
-
-short invalidCost (PricesType x, PricesType y, PricesType z) {
-    return (x <= 0 || y <= 0 || z <= 0 || x >= y || y >= z);
-}
-
-short equalPark (Park park1, Park park2) {
-    return (strcmp(park1->name, park2->name) == 0);
-}
-
-void oneLessFreeSpot (Park park) {
+void oneLessFreeSpot(Park park) {
     park->freeSpots -= 1;
 }
 
-void oneMoreFreeSpot (Park park) {
+void oneMoreFreeSpot(Park park) {
     park->freeSpots += 1;
 }
 
-short isParkFull (Park park) {
-    return park->freeSpots == 0;
-}
-
-
-
-PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
+PricesType calculateBilling(Prices prices, Time entryTime, Time exitTime) {
     PricesType billing = 0, lastDayBilling = 0;
     int difference = timeDifference(entryTime, exitTime);
   
@@ -82,9 +78,7 @@ PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
     return billing;
 }
 
-void addToParkBilling(Park park, char license[LICENSESIZE], Time time,
-    PricesType billed) {
-
+void addToParkBilling(Park park, char license[LICENSESIZE], Time time, PricesType billed) {
     Billing billing = newBilling(license, time.hours, billed);
 
     if (park->billing == NULL) {
@@ -127,8 +121,7 @@ Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed) {
 }
 
 DailyBilling newDailyBilling(Billing firstBill, Date date) {
-    DailyBilling dailyBilling = (DailyBilling) malloc(
-        sizeof(struct dailyBilling));
+    DailyBilling dailyBilling = (DailyBilling) malloc(sizeof(struct dailyBilling));
     dailyBilling->billList = firstBill;
     dailyBilling->date = date;
     dailyBilling->value = firstBill->value;
@@ -143,7 +136,6 @@ DailyBilling getDailyBilling(Park park, Date date) {
     }
     return current;
 }
-
 
 void printBilling(Park park) {
     DailyBilling current = park->billing;
