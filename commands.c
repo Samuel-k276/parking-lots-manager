@@ -41,6 +41,11 @@ short validateEntry(ListNode node, char *parkName, HashMap *carMap,
         return 0;
     }
 
+    if (isParkFull(node->park)) {
+        printf("%s: parking is full.\n", parkName);
+        return 0;
+    }
+
     if (invalidLicensePlate(license)) {
         printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
@@ -48,7 +53,7 @@ short validateEntry(ListNode node, char *parkName, HashMap *carMap,
     }
 
     if (isParked(getCar(*carMap, license))) {
-        printf("%c%c-%c%c-%c%c: vehicle already in parking.\n", license[0], 
+        printf("%c%c-%c%c-%c%c: invalid vehicle entry.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
         return 0;
     }
@@ -96,7 +101,7 @@ short validateExit(ListNode node, char *parkName, HashMap *carMap,
     }
 
     if (!isParked(getCar(*carMap, license))) {
-        printf("%c%c-%c%c-%c%c: vehicle not in parking.\n", license[0], 
+        printf("%c%c-%c%c-%c%c: invalid vehicle exit.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
         return 0;
     }
