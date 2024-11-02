@@ -39,7 +39,8 @@ short invalidCost(PricesType x, PricesType y, PricesType z);
 short equalPark(Park park1, Park park2);
 short isParkFull(Park park);
 
-Park createPark(char *name, int capacity, PricesType x, PricesType y, PricesType z);
+Park createPark(char *name, int capacity, 
+                PricesType x, PricesType y, PricesType z);
 Prices createPrices(PricesType x, PricesType y, PricesType z);
 
 void oneLessFreeSpot(Park park);
@@ -47,7 +48,8 @@ void oneMoreFreeSpot(Park park);
 
 PricesType calculateBilling(Prices prices, Time entryTime, Time exitTime);
 
-void addToParkBilling(Park park, char license[LICENSESIZE], Time time, PricesType billed);
+void addToParkBilling(Park park, char license[LICENSESIZE], 
+                    Time time, PricesType billed);
 Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed);
 DailyBilling newDailyBilling(Billing firstBill, Date date);
 DailyBilling getDailyBilling(Park park, Date date);

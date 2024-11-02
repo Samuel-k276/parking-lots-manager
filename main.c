@@ -7,41 +7,40 @@ int main() {
     ListNode headNode = NULL;
     HashMap carMap = createCarHashMap();
     Time time = time0();
+    char c;
 
-    char c = getchar();
-    while (c != 'q') {
-        switch(c) {
-            case 'p':
-                if (getchar() == '\n')
-                    commandP0(headNode);
-                else {
-                    inputToCommandP1(&headNode);
-                }
-                break;
-            case 'e':
-                inputToCommandEntryOrExit(&headNode, &carMap, &time, ENTRY);
-                break;
-            case 's':
-                inputToCommandEntryOrExit(&headNode, &carMap, &time, EXIT);
-                break;
-            case 'v':
-                inputToCommandV(carMap);
-                break;
-            case 'f':
-                inputToCommandF(headNode, time.date);
-                break;
-            case 'r':
-                inputToCommandR(&headNode, &carMap);
-                break;
-            default:
-                break;
-        }
-
-        c = getchar();
+    while ((c = getchar()) != 'q') {
+        if (c == '\n') continue;
+        processCommand(c, &headNode, &carMap, &time);
     }
 
     freeAll(&headNode, &carMap);
     return 0;
+}
+
+void processCommand(char c, ListNode *headNode, HashMap *carMap, Time *time) {
+    switch(c) {
+        case 'p':
+            inputToCommandP(headNode);
+            break;
+        case 'e':
+            inputToCommandEntryOrExit(headNode, carMap, time, ENTRY);
+            break;
+        case 's':
+            inputToCommandEntryOrExit(headNode, carMap, time, EXIT);
+            break;
+        case 'v':
+            inputToCommandV(*carMap);
+            break;
+        case 'f':
+            inputToCommandF(*headNode, time->date);
+            break;
+        case 'r':
+            inputToCommandR(headNode, carMap);
+            break;
+        default:
+            break;
+    }
 }
 
 void freeAll(ListNode *headNode, HashMap *carMap) {
@@ -53,7 +52,11 @@ void freeAll(ListNode *headNode, HashMap *carMap) {
         freeList(*headNode);
 }
 
-void inputToCommandP1(ListNode *headNode) {
+void inputToCommandP(ListNode *headNode) {
+    if (getchar() == '\n') {
+        commandP0(*headNode);
+        return;
+    }
     char *name = readName();
     int capacity;
     PricesType x, y, z;

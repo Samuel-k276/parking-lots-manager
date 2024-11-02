@@ -20,7 +20,8 @@ short isParkFull(Park park) {
     return park->freeSpots == 0;
 }
 
-Park createPark(char *name, int capacity, PricesType x, PricesType y, PricesType z) {
+Park createPark(char *name, int capacity, PricesType x, PricesType y, 
+    PricesType z) {
     Park thisPark = (Park)malloc(sizeof(struct park));
     thisPark->name = strdup(name);
     thisPark->capacity = capacity;
@@ -78,7 +79,8 @@ PricesType calculateBilling(Prices prices, Time entryTime, Time exitTime) {
     return billing;
 }
 
-void addToParkBilling(Park park, char license[LICENSESIZE], Time time, PricesType billed) {
+void addToParkBilling(Park park, char license[LICENSESIZE], Time time, 
+    PricesType billed) {
     Billing billing = newBilling(license, time.hours, billed);
 
     if (park->billing == NULL) {
@@ -121,7 +123,8 @@ Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed) {
 }
 
 DailyBilling newDailyBilling(Billing firstBill, Date date) {
-    DailyBilling dailyBilling = (DailyBilling) malloc(sizeof(struct dailyBilling));
+    DailyBilling dailyBilling = (DailyBilling) 
+        malloc(sizeof(struct dailyBilling));
     dailyBilling->billList = firstBill;
     dailyBilling->date = date;
     dailyBilling->value = firstBill->value;

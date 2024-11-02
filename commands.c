@@ -34,92 +34,103 @@ void commandP1(ListNode *headNode, char* name, int capacity, PricesType x,
     appendListNode(createListNode(newPark), headNode);
 }
 
-void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, 
-              char license[LICENSESIZE], Time newTime) {
-    Car car;
-    ListNode node = findListNode(parkName, headNode);
-
-    if (node == NULL || node->park == NULL) {
+short validateEntry(ListNode node, char *parkName, HashMap *carMap, 
+                    char license[LICENSESIZE], Time *time, Time newTime) {
+    if (node == NULL) {
         printf("%s: no such parking.\n", parkName);
-        return;
-    }
-
-    Park park = node->park;
-
-    if (isParkFull(park)) {
-        printf("%s: parking is full.\n", parkName);
-        return;
+        return 0;
     }
 
     if (invalidLicensePlate(license)) {
         printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
-        return;
+        return 0;
     }
 
-    if (isParked(car = getCar(*carMap, license))) {
-        printf("%c%c-%c%c-%c%c: invalid vehicle entry.\n", license[0], 
+    if (isParked(getCar(*carMap, license))) {
+        printf("%c%c-%c%c-%c%c: vehicle already in parking.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
-        return;
+        return 0;
     }
 
     if (invalidTime(newTime) || mostRecent(*time, newTime)) {
         printf("invalid date.\n");
+        return 0;
+    }
+
+    return 1;
+}
+
+void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, 
+              char license[LICENSESIZE], Time newTime) {
+    ListNode node = findListNode(parkName, headNode);
+
+    if (!validateEntry(node, parkName, carMap, license, time, newTime)) {
         return;
     }
 
+    Car car = getCar(*carMap, license);
     if (car == NULL) {
         car = createCar(license);
         putCar(carMap, license, car);
     }
     
     addEntry(parkName, car, newTime);
-    oneLessFreeSpot(park);
+    oneLessFreeSpot(node->park);
     changeTime(time, newTime);
 
-    printf("%s %d\n", park->name, park->freeSpots);
+    printf("%s %d\n", parkName, node->park->freeSpots);
 }
 
-void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, 
-              char license[LICENSESIZE], Time newTime) {
-    Car car;
-    ListNode node = findListNode(parkName, headNode);
-
+short validateExit(ListNode node, char *parkName, HashMap *carMap, 
+                   char license[LICENSESIZE], Time *time, Time newTime) {
     if (node == NULL) {
         printf("%s: no such parking.\n", parkName);
-        return;
+        return 0;
     }
 
-    Park park = node->park;
     if (invalidLicensePlate(license)) {
         printf("%c%c-%c%c-%c%c: invalid licence plate.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
-        return;
+        return 0;
     }
 
-    if (!isParked(car = getCar(*carMap, license))) {
-        printf("%c%c-%c%c-%c%c: invalid vehicle exit.\n", license[0], 
+    if (!isParked(getCar(*carMap, license))) {
+        printf("%c%c-%c%c-%c%c: vehicle not in parking.\n", license[0], 
             license[1], license[2], license[3], license[4], license[5]);
-        return;
+        return 0;
     }
 
     if (invalidTime(newTime) || mostRecent(*time, newTime)) {
         printf("invalid date.\n");
+        return 0;
+    }
+
+    return 1;
+}
+
+void commandS(ListNode *headNode, HashMap *carMap, Time *time, char *parkName, 
+              char license[LICENSESIZE], Time newT) {
+    ListNode node = findListNode(parkName, headNode);
+
+    if (!validateExit(node, parkName, carMap, license, time, newT)) {
         return;
     }
 
-    Time entryTime = addExit(parkName, car, newTime);
+    Park park = node->park;
+    Car car = getCar(*carMap, license);
+
+    Time entryT = addExit(parkName, car, newT);
     oneMoreFreeSpot(park);
-    PricesType billed = calculateBilling(park->prices, entryTime, newTime);
-    addToParkBilling(park, license, newTime, billed);
-    changeTime(time, newTime);
+    PricesType billed = calculateBilling(park->prices, entryT, newT);
+    addToParkBilling(park, license, newT, billed);
+    changeTime(time, newT);
     char *licenseString = licenseToString(car->license);
 
     printf("%s %02d-%02d-%04d %02d:%02d %02d-%02d-%04d %02d:%02d %.2f\n", 
-           licenseString, entryTime.date.day, entryTime.date.month, 
-           entryTime.date.year, entryTime.hours.hours, entryTime.hours.minutes, 
-           newTime.date.day, newTime.date.month, newTime.date.year, 
-           newTime.hours.hours, newTime.hours.minutes, billed);   
+    licenseString, entryT.date.day, entryT.date.month, entryT.date.year, 
+    entryT.hours.hours, entryT.hours.minutes, newT.date.day, newT.date.month,
+    newT.date.year, newT.hours.hours, newT.hours.minutes, billed);   
     free(licenseString);
 }
 
