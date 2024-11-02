@@ -77,8 +77,8 @@ short invalidLicensePlate(char license[LICENSESIZE]) {
 }
 
 short invalidPair (char a, char b) {
-    return !('0' <= a <= '9' && '0' <= b <= '9' ||
-             'A' <= a <= 'Z' && 'A' <= b <= 'Z' );
+    return !(('0' <= a && a <= '9' && '0' <= b && b <= '9') ||
+             ('A' <= a && a <= 'Z' && 'A' <= b && b <= 'Z'));
 }
 
 char* licenseToString(char license[LICENSESIZE]) {

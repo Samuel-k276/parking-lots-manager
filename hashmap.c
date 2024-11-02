@@ -29,7 +29,7 @@ void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value) {
         pair = pair->next;
     }
 
-    pair = (Pair) malloc(sizeof(Pair));
+    pair = (Pair) malloc(sizeof(struct Pair));
     strcpy(pair->key, key);
     pair->value = value;
     pair->next = carMap->table[hashval];
@@ -70,7 +70,8 @@ void removeEntries(char *name, HashMap *carMap) {
     for (int i = 0; i < HASHSIZE; i++) {
         Pair pair = carHashMap->table[i];
         while (pair != NULL) {
-            if (pair->value != NULL) removeCarHistory(name, pair->value);
+            if (pair->value != NULL) 
+                removeCarHistory(name, pair->value);
             pair = pair->next;
         }
     }
