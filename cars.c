@@ -24,7 +24,8 @@ short isParked (Car thisCar) {
 History createHistory (char *parkName, Time entryTime) {
     History thisHistory = (History)malloc(sizeof(struct carHistory));
     thisHistory->entryTime = entryTime;
-    thisHistory->parkName = parkName;
+    thisHistory->exitTime = newTime(0, 0, 0, 0, 0);
+    thisHistory->parkName = strdup(parkName);
     thisHistory->next = NULL;
     
     return thisHistory;

@@ -39,7 +39,7 @@ void commandE(ListNode *headNode, HashMap *carMap, Time *time, char *parkName,
     Car car;
     ListNode node = findListNode(parkName, headNode);
 
-    if (node == NULL) {
+    if (node == NULL || node->park == NULL) {
         printf("%s: no such parking.\n", parkName);
         return;
     }
@@ -176,8 +176,9 @@ void commandR(ListNode *headNode, char *name, HashMap *carMap) {
         printf("%s: no such parking.\n", name);
         return;
     }
-    removeListNode(name, headNode);
+    
     removeEntries(name, carMap);
+    removeListNode(name, headNode);
     printListSorted(*headNode);
 }
 

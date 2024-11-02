@@ -35,6 +35,7 @@ void removeCarHistory(char *name, Car car);
 void printHistory(Car car);
 Time addExit(char *parkName, Car car, Time time);
 void freeHistory(Car car);
+void freeCar(Car car);
 
 
 #endif

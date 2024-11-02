@@ -50,20 +50,24 @@ Car getCar(HashMap hashMap, char key[LICENSESIZE]) {
     return NULL;
 }
 
+void freeCarHashMap(HashMap *map) {
+    if (*map == NULL) return; // Certifique-se de que não é NULL
 
-void freeCarHashMap(HashMap map) {
     for (int i = 0; i < HASHSIZE; i++) {
-        Pair pair = map->table[i];
+        Pair pair = (*map)->table[i];
         while (pair != NULL) {
             Pair next = pair->next;
-            if (pair->value != NULL)
-                freeHistory(pair->value);
-            free(pair);
+            if (pair->value != NULL) {
+                freeCar(pair->value); // Libere campos internos de Car
+            }
+            free(pair); // Libera o par
             pair = next;
         }
-    }   
-    free(map);
+    }
+    free(*map);   // Libera o hashmap
+    *map = NULL;  // Define como NULL para evitar ponteiros pendentes
 }
+
 
 void removeEntries(char *name, HashMap *carMap) {
     HashMap carHashMap = *carMap;

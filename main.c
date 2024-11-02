@@ -40,22 +40,26 @@ int main() {
         c = getchar();
     }
 
-    freeAll(headNode, carMap);
+    freeAll(&headNode, &carMap);
     return 0;
 }
 
-void freeAll(ListNode headNode, HashMap carMap) {
-    if (carMap != NULL) freeCarHashMap(carMap);
-    if (headNode != NULL) freeList(headNode);
+void freeAll(ListNode *headNode, HashMap *carMap) {
+    //if (*carMap != NULL) 
+        
+        freeCarHashMap(carMap);
+        *carMap = NULL;
+    //if (*headNode != NULL)  
+        freeList(*headNode);
 }
 
 void inputToCommandP1(ListNode *headNode) {
     char *name = readName();
-    
     int capacity;
     PricesType x, y, z;
     scanf("%d %f %f %f", &capacity, &x, &y, &z);
     commandP1(headNode, name, capacity, x, y, z);
+    free(name);
 }
 
 void inputToCommandEntryOrExit(ListNode *headNode, HashMap *carMap,
@@ -73,6 +77,7 @@ void inputToCommandEntryOrExit(ListNode *headNode, HashMap *carMap,
     Time new = newTime(day, month, year, hours, minutes);
     if (type == ENTRY) commandE(headNode, carMap, time, name, license, new);
     if (type == EXIT) commandS(headNode, carMap, time, name, license, new);
+    free(name);
 }
 
 void inputToCommandV(HashMap carMap) {
@@ -95,6 +100,7 @@ void inputToCommandF(ListNode headNode, Date currentDate) {
         Date date = newDate(day, month, year);
         commandF1(headNode, name, date, currentDate);
     }
+    free(name);
 }
 
 void inputToCommandR(ListNode *headNode, HashMap *carMap) {

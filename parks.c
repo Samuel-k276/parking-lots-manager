@@ -8,7 +8,7 @@ Park createPark (char* name, int capacity,
     PricesType x, PricesType y, PricesType z) {
 
     Park thisPark = (Park)malloc(sizeof(struct park));
-    thisPark->name = (char *)name;
+    thisPark->name = strdup(name);
     thisPark->capacity = capacity;
     thisPark->freeSpots = capacity;
     thisPark->prices = createPrices(x, y, z);
@@ -50,20 +50,7 @@ short isParkFull (Park park) {
     return park->freeSpots == 0;
 }
 
-void freePark(Park thisPark) {
-    free(thisPark->name);
-    while (thisPark->billing != NULL) {
-        DailyBilling next = thisPark->billing->next;
-        while (thisPark->billing->billList != NULL) {
-            Billing nextBill = thisPark->billing->billList->next;
-            free(thisPark->billing->billList);
-            thisPark->billing->billList = nextBill;
-        }
-        free(thisPark->billing);
-        thisPark->billing = next;
-    }
-    free(thisPark);
-}
+
 
 PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
     PricesType billing = 0, lastDayBilling = 0;
@@ -179,4 +166,19 @@ void printDailyBilling(Park park, Date date) {
         free(licenseString);
         current = current->next;
     }
+}
+
+void freePark(Park thisPark) {
+    free(thisPark->name);
+    while (thisPark->billing != NULL) {
+        DailyBilling next = thisPark->billing->next;
+        while (thisPark->billing->billList != NULL) {
+            Billing nextBill = thisPark->billing->billList->next;
+            free(thisPark->billing->billList);
+            thisPark->billing->billList = nextBill;
+        }
+        free(thisPark->billing);
+        thisPark->billing = next;
+    }
+    free(thisPark);
 }
