@@ -72,8 +72,8 @@ short invalidLicensePlate(char license[LICENSESIZE]) {
         || invalidPair(license[4], license[5])) {
         return 1;
     }
-    return (isupper(license[0]) && isupper(license[2]) && isupper(license[4])) ||
-           (isdigit(license[0]) && isdigit(license[2]) && isdigit(license[4]));
+    return (isupper(license[0]) &&isupper(license[2]) &&isupper(license[4])) ||
+           (isdigit(license[0]) &&isdigit(license[2]) &&isdigit(license[4]));
 }
 
 short invalidPair (char a, char b) {
@@ -98,13 +98,16 @@ char* licenseToString(char license[LICENSESIZE]) {
 void printHistory(Car car) {
     History current = car->history;
     while (current != NULL) {
-        printf("%s %02d-%02d-%04d %02d:%02d", 
-                current->parkName, current->entryTime.date.day, current->entryTime.date.month,
-                current->entryTime.date.year, current->entryTime.hours.hours, current->entryTime.hours.minutes);
+        Time entryTime = current->entryTime;
+        printf("%s %02d-%02d-%04d %02d:%02d", current->parkName, 
+            entryTime.date.day, entryTime.date.month, entryTime.date.year,
+            entryTime.hours.hours, entryTime.hours.minutes);
+
         if (current->exitTime.date.day != 0) {
+            Time exitTime = current->exitTime;
             printf(" %02d-%02d-%04d %02d:%02d", 
-                current->exitTime.date.day, current->exitTime.date.month, current->exitTime.date.year,
-                current->exitTime.hours.hours, current->exitTime.hours.minutes);
+                exitTime.date.day, exitTime.date.month, exitTime.date.year,
+                exitTime.hours.hours, exitTime.hours.minutes);
         }
         printf("\n");
 

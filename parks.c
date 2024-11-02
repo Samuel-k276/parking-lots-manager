@@ -140,7 +140,8 @@ Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed) {
 }
 
 DailyBilling newDailyBilling(Billing firstBill, Date date) {
-    DailyBilling dailyBilling = (DailyBilling) malloc(sizeof(struct dailyBilling));
+    DailyBilling dailyBilling = (DailyBilling) malloc(
+        sizeof(struct dailyBilling));
     dailyBilling->billList = firstBill;
     dailyBilling->date = date;
     dailyBilling->value = firstBill->value;

@@ -2,7 +2,7 @@
 
 #include "time.h"
 
-const short daysInTheMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+const short daysInTheMonth[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
 Time time0() {
   Time time;
