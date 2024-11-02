@@ -4,7 +4,9 @@
 
 #include "parks.h"
 
-Park createPark (char* name, int capacity, PricesType x, PricesType y, PricesType z) {
+Park createPark (char* name, int capacity, 
+    PricesType x, PricesType y, PricesType z) {
+
     Park thisPark = (Park)malloc(sizeof(struct park));
     thisPark->name = (char *)name;
     thisPark->capacity = capacity;
@@ -93,7 +95,9 @@ PricesType calculateBilling (Prices prices, Time entryTime, Time exitTime) {
     return billing;
 }
 
-void addToParkBilling(Park park, char license[LICENSESIZE], Time time, PricesType billed) {
+void addToParkBilling(Park park, char license[LICENSESIZE], Time time,
+    PricesType billed) {
+
     Billing billing = newBilling(license, time.hours, billed);
 
     if (park->billing == NULL) {
@@ -136,7 +140,7 @@ Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed) {
 }
 
 DailyBilling newDailyBilling(Billing firstBill, Date date) {
-    DailyBilling dailyBilling = (DailyBilling)malloc(sizeof(struct dailyBilling));
+    DailyBilling dailyBilling = (DailyBilling) malloc(sizeof(struct dailyBilling));
     dailyBilling->billList = firstBill;
     dailyBilling->date = date;
     dailyBilling->value = firstBill->value;
@@ -156,7 +160,8 @@ DailyBilling getDailyBilling(Park park, Date date) {
 void printBilling(Park park) {
     DailyBilling current = park->billing;
     while (current != NULL) {
-        printf("%02d-%02d-%04d %.2f\n", current->date.day, current->date.month, current->date.year, current->value);
+        printf("%02d-%02d-%04d %.2f\n", current->date.day, current->date.month,
+                                        current->date.year, current->value);
         current = current->next;
     }
 }
@@ -167,7 +172,9 @@ void printDailyBilling(Park park, Date date) {
     Billing current = daily->billList;
     while (current != NULL) {
         char *licenseString = licenseToString(current->license);
-        printf("%s %02d:%02d %.2f\n", licenseString, current->hours.hours, current->hours.minutes, current->value);
+        printf("%s %02d:%02d %.2f\n", licenseString, current->hours.hours, 
+                                      current->hours.minutes, current->value);
+
         free(licenseString);
         current = current->next;
     }

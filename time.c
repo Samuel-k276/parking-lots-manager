@@ -16,8 +16,10 @@ Time time0() {
 }
 
 short invalidTime(Time date) {
-        return (date.date.month > 12 || date.date.month < 1 || date.date.day < 1 || date.date.day > daysInTheMonth[date.date.month - 1] || 
-            date.hours.minutes > 59 || date.hours.minutes < 0 || date.hours.hours > 23 || date.hours.hours < 0);       
+        return (date.date.month > 12 || date.date.month < 1 || date.date.day < 1
+                || date.date.day > daysInTheMonth[date.date.month - 1] || 
+                date.hours.minutes > 59 || date.hours.minutes < 0 || 
+                date.hours.hours > 23 || date.hours.hours < 0);       
 }
 
 //return 1 if time 1 is the most recent
@@ -87,5 +89,6 @@ short mostRecentDate(Date d0, Date d1) {
 }
 
 short invalidDate(Date date) {
-    return (date.month > 12 || date.month < 1 || date.day < 1 || date.day > daysInTheMonth[date.month - 1]);
+    return (date.month > 12 || date.month < 1 || 
+            date.day < 1 || date.day > daysInTheMonth[date.month - 1]);
 }

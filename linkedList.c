@@ -30,7 +30,8 @@ void appendListNode(ListNode node, ListNode *beginOfList) {
 ListNode findListNode(char *name, ListNode *headNode) {
     ListNode current = *headNode;
     while (current != NULL) {
-        if (current->park != NULL && current->park->name != NULL && strcmp(current->park->name, name) == 0) {
+        if (current->park != NULL && current->park->name != NULL && 
+            strcmp(current->park->name, name) == 0) {
             return current;
         }
         current = current->next;
@@ -75,7 +76,9 @@ void removeListNode(char *name, ListNode *head) {
 void printAllNodes(ListNode headNode) {
     ListNode current = headNode;
     while (current != NULL) {
-        printf("%s %d %d\n", current->park->name, current->park->capacity, current->park->freeSpots);
+        printf("%s %d %d\n", current->park->name, 
+        current->park->capacity, current->park->freeSpots);
+        
         current = current->next;
     }
 }
