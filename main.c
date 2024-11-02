@@ -103,7 +103,7 @@ void inputToCommandF(ListNode headNode, Date currentDate) {
         Date date = newDate(day, month, year);
         commandF1(headNode, name, date, currentDate);
     }
-    
+    free(name);
 }
 
 void inputToCommandR(ListNode *headNode, HashMap *carMap) {
