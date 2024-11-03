@@ -2,6 +2,7 @@
 
 #include "time.h"
 
+/** The number of days in each month */
 const short daysInTheMonth[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
 Time time0() {
