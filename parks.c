@@ -23,12 +23,15 @@ short isParkFull(Park park) {
 Park createPark(char *name, int capacity, PricesType x, PricesType y, 
     PricesType z) {
     Park thisPark = (Park)malloc(sizeof(struct park));
+    if (thisPark == NULL) {
+        perror("error creating park");
+        return NULL;
+    }
     thisPark->name = strdup(name);
     thisPark->capacity = capacity;
     thisPark->freeSpots = capacity;
     thisPark->prices = createPrices(x, y, z);
     thisPark->billing = NULL;
-
     return thisPark;
 }
 
@@ -37,7 +40,6 @@ Prices createPrices(PricesType x, PricesType y, PricesType z) {
     thisPrices.x = x;
     thisPrices.y = y;
     thisPrices.z = z;
-
     return thisPrices;
 }
 
@@ -115,6 +117,9 @@ void addToParkBilling(Park park, char license[LICENSESIZE], Time time,
 
 Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed) {
     Billing billing = (Billing)malloc(sizeof(struct billing));
+    if (billing == NULL) {
+        return NULL;
+    }
     strcpy(billing->license, license);
     billing->hours = hours;
     billing->value = billed;
@@ -125,6 +130,10 @@ Billing newBilling(char license[LICENSESIZE], Hours hours, PricesType billed) {
 DailyBilling newDailyBilling(Billing firstBill, Date date) {
     DailyBilling dailyBilling = (DailyBilling) 
         malloc(sizeof(struct dailyBilling));
+
+    if (dailyBilling == NULL) {
+        return NULL;
+    }
     dailyBilling->billList = firstBill;
     dailyBilling->date = date;
     dailyBilling->value = firstBill->value;
@@ -133,6 +142,11 @@ DailyBilling newDailyBilling(Billing firstBill, Date date) {
 }
 
 DailyBilling getDailyBilling(Park park, Date date) {
+    if (park == NULL) {
+        perror("park is NULL");
+        return NULL;
+    }
+
     DailyBilling current = park->billing;
     while (current != NULL && !equalDate(current->date, date)) {
         current = current->next;
@@ -141,6 +155,10 @@ DailyBilling getDailyBilling(Park park, Date date) {
 }
 
 void printBilling(Park park) {
+    if (park == NULL) {
+        perror("park is NULL");
+        return;
+    }
     DailyBilling current = park->billing;
     while (current != NULL) {
         printf("%02d-%02d-%04d %.2f\n", current->date.day, current->date.month,
@@ -151,7 +169,8 @@ void printBilling(Park park) {
 
 void printDailyBilling(Park park, Date date) {
     DailyBilling daily = getDailyBilling(park, date);
-    if (daily == NULL) { return; }
+    if (daily == NULL) 
+        return;
     Billing current = daily->billList;
     while (current != NULL) {
         char *licenseString = licenseToString(current->license);
@@ -164,6 +183,9 @@ void printDailyBilling(Park park, Date date) {
 }
 
 void freePark(Park thisPark) {
+    if (thisPark == NULL) {
+        return;
+    }
     free(thisPark->name);
     while (thisPark->billing != NULL) {
         DailyBilling next = thisPark->billing->next;

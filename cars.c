@@ -7,6 +7,9 @@
 
 Car createCar(char license[LICENSESIZE]) {
     Car thisCar = (Car)malloc(sizeof(struct carro));
+    if (thisCar == NULL) {
+        return NULL;
+    }
     strcpy(thisCar->license, license);
     thisCar->history = NULL;
     thisCar->isParked = NOTPARKED;
@@ -17,6 +20,9 @@ Car createCar(char license[LICENSESIZE]) {
 
 History createHistory(char *parkName, Time entryTime) {
     History thisHistory = (History)malloc(sizeof(struct carHistory));
+    if (thisHistory == NULL) {
+        return NULL;
+    }
     thisHistory->entryTime = entryTime;
     thisHistory->exitTime = newTime(0, 0, 0, 0, 0);
     thisHistory->parkName = strdup(parkName);
@@ -27,6 +33,11 @@ History createHistory(char *parkName, Time entryTime) {
 
 void addEntry(char *parkName, Car thisCar, Time time) {
     History newHistory = createHistory(parkName, time);
+
+    if (newHistory == NULL) {
+        return;
+    }
+
     if (thisCar->history == NULL) {
         thisCar->history = newHistory;
     } else {
@@ -83,6 +94,9 @@ short invalidPair(char a, char b) {
 
 char* licenseToString(char license[LICENSESIZE]) {
     char* string = (char*)malloc((LICENSESIZE + 2) * sizeof(char));
+    if (string == NULL) {
+        return NULL;
+    }
     string[0] = license[0];
     string[1] = license[1];
     string[2] = '-';
@@ -155,6 +169,10 @@ void freeHistory(Car car) {
 }
 
 void freeCar(Car car) {
+    if (car == NULL) {
+        return;
+    }
+    
     freeHistory(car);
     free(car);
 }

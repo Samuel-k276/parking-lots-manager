@@ -6,6 +6,10 @@
 
 HashMap createCarHashMap() {
     HashMap hashMap = (HashMap) malloc(sizeof(struct HashMap));
+    if (hashMap == NULL) {
+        perror("error creating hashmap");
+        return NULL;
+    }
     for (int i = 0; i < HASHSIZE; i++) {
         hashMap->table[i] = NULL;
     }
@@ -21,15 +25,28 @@ unsigned int hash(char key[LICENSESIZE]) {
 }
 
 void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value) {
+    if (*hashMap == NULL) {
+        perror("hashmap is NULL");
+        return;
+    }
+
+    if (value == NULL) {
+        perror("car is NULL");
+        return;
+    }
+
     unsigned int hashval = hash(key);
     HashMap carMap = *hashMap;
     Pair pair = carMap->table[hashval];
 
-    while (pair != NULL) {
+    while (pair != NULL)
         pair = pair->next;
-    }
 
     pair = (Pair) malloc(sizeof(struct Pair));
+    if (pair == NULL) {
+        perror("error creating pair");
+        return;
+    }
     strcpy(pair->key, key);
     pair->value = value;
     pair->next = carMap->table[hashval];
@@ -37,13 +54,16 @@ void putCar(HashMap *hashMap, char key[LICENSESIZE], Car value) {
 }
 
 Car getCar(HashMap hashMap, char key[LICENSESIZE]) {
+    if (hashMap == NULL) {
+        perror("hashmap is NULL");
+        return NULL;
+    };
     unsigned int hashval = hash(key);
     Pair pair = hashMap->table[hashval];
 
     while (pair != NULL) {
-        if (strcmp(pair->key, key) == 0) {
+        if (strcmp(pair->key, key) == 0)
             return pair->value;
-        }
         pair = pair->next;
     }
 
@@ -51,6 +71,8 @@ Car getCar(HashMap hashMap, char key[LICENSESIZE]) {
 }
 
 void removeEntries(char *name, HashMap *carMap) {
+    if (*carMap == NULL) return;
+
     HashMap carHashMap = *carMap;
     for (int i = 0; i < HASHSIZE; i++) {
         Pair pair = carHashMap->table[i];

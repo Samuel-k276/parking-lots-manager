@@ -12,7 +12,6 @@ Time time0() {
     time.date.year = 1;
     time.hours.hours = 0;
     time.hours.minutes = 0;
- 
     return time;
 }
 
@@ -27,7 +26,6 @@ Time newTime(int day, int month, int year, int hours, int minutes) {
         time.date.year = year;
         time.hours.hours = hours;
         time.hours.minutes = minutes;
-
         return time;
 }
 
@@ -59,10 +57,9 @@ int timeDifference(Time entry, Time exit) {
         totalMinutes += (exit.hours.hours - entry.hours.hours) * 60;
         totalMinutes += (exit.date.day - entry.date.day) * 24 * 60;
         totalMinutes += (exit.date.year - entry.date.year) * 365 * 24 * 60;
-
-        for (int i = entry.date.month; i < exit.date.month; i++) {
+        for (int i = entry.date.month; i < exit.date.month; i++)
                 totalMinutes += daysInTheMonth[i - 1] * 24 * 60;
-        }
+        
         return totalMinutes;
 }
 

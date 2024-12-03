@@ -5,7 +5,15 @@
 #include "linkedList.h"
 
 ListNode createListNode(Park park) {
+    if (park == NULL) {
+        perror("park is NULL");
+        return NULL;
+    }
     ListNode thisNode = (ListNode)malloc(sizeof(struct listNode));
+    if (thisNode == NULL) {
+        perror("error creating node");
+        return NULL;
+    }
     thisNode->prev = NULL;
     thisNode->park = park;
     thisNode->next = NULL;
@@ -77,7 +85,6 @@ void printAllNodes(ListNode headNode) {
     while (current != NULL) {
         printf("%s %d %d\n", current->park->name, 
         current->park->capacity, current->park->freeSpots);
-        
         current = current->next;
     }
 }

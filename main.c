@@ -44,12 +44,8 @@ void processCommand(char c, ListNode *headNode, HashMap *carMap, Time *time) {
 }
 
 void freeAll(ListNode *headNode, HashMap *carMap) {
-    //if (*carMap != NULL) 
-        
-        freeCarHashMap(carMap);
-        *carMap = NULL;
-    //if (*headNode != NULL)  
-        freeList(*headNode);
+    freeCarHashMap(carMap);
+    freeList(*headNode);
 }
 
 void inputToCommandP(ListNode *headNode) {
@@ -117,7 +113,11 @@ char* readName() {
     char c = getchar(); 
     char end1 = ' ';
     char end2 = '\n';
-    char *name = (char *)malloc(sizeof(char));;
+    char *name = (char *)malloc(sizeof(char));
+    if (name == NULL) {
+        perror("error reading name");
+        return NULL;
+    }
     int i;
     if (c == '"') {
         end1 = '"';
@@ -129,6 +129,10 @@ char* readName() {
         name[i] = c;
         c = getchar();
         name = (char *)realloc(name, (i+2)* sizeof(char));
+        if (name == NULL) {
+            perror("error reading name");
+            return NULL;
+        }
     }
     if (end1 == '"') c = getchar();
     if (c == '\n' || c == ' ') ungetc(c, stdin);
